@@ -12,7 +12,8 @@ class Server {
 		this.paths = {
 			temp: '/api/temperament',
 			dog: '/api/dog',
-			dogs: '/api/dogs'
+			dogs: '/api/dogs',
+			img: '/api/img',
 		}
 
 		this.dbConnection();
@@ -43,6 +44,7 @@ class Server {
 		this.app.use(this.paths.temp, require('./routes/temp'));
 		this.app.use(this.paths.dog, require('./routes/dog'));
 		this.app.use(this.paths.dogs, require('./routes/dogs'));
+		this.app.use(this.paths.img, require('./routes/img'));
 	}
 
 	listen(){

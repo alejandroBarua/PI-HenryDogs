@@ -1,6 +1,8 @@
+const path = require('path');
+
 const { Dog } = require('../models');
 
-const getDogById = async(req, res) => {
+const getImgById = async(req, res) => {
 
 	const { id } = req.params;
 
@@ -8,7 +10,7 @@ const getDogById = async(req, res) => {
 		
 		const dog = await Dog.findOne({ 
 			where: { id },
-			attributes: ['id', 'name', 'weight', 'height', 'age']
+			attributes: ['image']
 		})
 		
 		if(!dog){
@@ -17,17 +19,8 @@ const getDogById = async(req, res) => {
 			})
 		}
 
-		dog.image = `http://localhost:${process.env.PORT}/api/img/${id}`;
-		
-		let temps = await dog.getTemps();
-		temps = temps.map(el => el.name);
-
-		res.status(200).json({
-			data: {
-				dog,
-				temps
-			}		
-		})
+		const pathImage = path.join(__dirname, '../uploads/', dog.image);
+		res.status(200).sendFile(pathImage)
 
 	} catch (error) {
 		
@@ -40,6 +33,6 @@ const getDogById = async(req, res) => {
 
 
 module.exports = {
-	getDogById,
+	getImgById,
 
 }
