@@ -8,7 +8,7 @@ const validateValuesDog = async(req, res, next) => {
 		name, 
 		minWeight, maxWeight, 
 		minHeight, maxHeight, 
-		minAge, maxAge, 
+		minYear, maxYear, 
 		temps,
 	} = req.body;
 
@@ -31,7 +31,7 @@ const validateValuesDog = async(req, res, next) => {
 		return res.status(400).json({error: "The height is invalid."})
 	}
 
-	if(!isNumber(minAge, maxAge)){
+	if(!isNumber(minYear, maxYear)){
 		return res.status(400).json({error: "The age is invalid."})
 	}
 

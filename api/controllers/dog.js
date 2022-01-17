@@ -10,7 +10,7 @@ const createDog = async(req = request, res = response) => {
 		name, 
 		minWeight, maxWeight, 
 		minHeight, maxHeight, 
-		minAge, maxAge, 
+		minYear, maxYear, 
 		temps,
 	} = req.body;
 
@@ -20,11 +20,11 @@ const createDog = async(req = request, res = response) => {
 
 	const weight = getRange(minWeight, maxWeight);
 	const height = getRange(minHeight, maxHeight);
-	const age = getRange(minAge, maxAge);
+	const life_span = getRange(minYear, maxYear);
 
 	try {
 
-		const newDog = await Dog.create({ name, weight, height, age });
+		const newDog = await Dog.create({ name, weight, height, life_span });
 
 		const promises = temps.map(el => Temp.findOne({ where: { name: el }}));
 		const tempsDB = await Promise.all(promises);

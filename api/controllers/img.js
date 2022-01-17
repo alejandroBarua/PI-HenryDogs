@@ -1,6 +1,6 @@
 const path = require('path');
 
-const uploadImage = require('../helpers/uploadImage');
+const uploadImage = require('../utils/uploadImage');
 
 const { Dog } = require('../models');
 
