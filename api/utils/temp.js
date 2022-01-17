@@ -1,7 +1,7 @@
 
-const extractTemps = (temps) => {
+const extractTemps = (data) => {
 
-	return temps.reduce((previousValue, currentValue, index) => {
+	return data.reduce((previousValue, currentValue, index) => {
 	
 		if(index === 1) previousValue = previousValue.temperament?.split(', ');
 		previousValue = [...new Set(previousValue)];

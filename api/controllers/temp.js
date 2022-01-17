@@ -3,7 +3,7 @@ const axios = require('axios');
 
 const { Temp } = require('../models');
 
-const { extractTemps } = require('../helpers/temp');
+const { extractTemps } = require('../utils/temp');
 
 
 const getTemps = async(req = request, res = response) => {

@@ -10,7 +10,7 @@ class Server {
 		this.app = express();
 		this.port = process.env.PORT || '8080';
 		this.paths = {
-			dog: '/api/dogs',
+			dog: '/api/dog',
 			temp: '/api/temperament'
 		}
 

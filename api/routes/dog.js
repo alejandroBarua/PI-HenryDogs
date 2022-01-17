@@ -1,14 +1,21 @@
 const { Router } = require('express');
 const router = Router();
 
-const {
-	getDogs,
+const { 
+	validateValuesDog,
+	validateDogNotExist,
+	
+} = require('../middleware/validateNewDog');
+const validateTemps = require('../middleware/validateTemps');
 
-} = require('../controllers/dog')
+const { createDog } = require('../controllers/dog');
 
 
-
-router.get('/', getDogs);
+router.post('/', 
+	validateValuesDog,
+	validateDogNotExist,
+	validateTemps,
+	createDog);
 
 
 

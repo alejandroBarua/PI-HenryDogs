@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     image:{
       type:DataTypes.STRING,
+      defaultValue: 'imagen por defecto',
       allowNull:false
     }
   }, {
