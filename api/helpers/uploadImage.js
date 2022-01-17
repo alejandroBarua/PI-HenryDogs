@@ -1,7 +1,6 @@
 const path = require('path');
-const { v4: uuidv4 } = require('uuid');
 
-const uploadImage = (files) => {
+const uploadImage = (files, dogId) => {
 
 	return new Promise((resolve, reject) => {
 
@@ -11,7 +10,7 @@ const uploadImage = (files) => {
 		const { image } = files;
 
 		const type = image.mimetype.split('/')[1];
-		const nameImage = uuidv4() + '.' + type;
+		const nameImage = dogId + '.' + type;
 
 		const uploadPath = path.join(__dirname, '../uploads/', nameImage);
 

@@ -23,7 +23,7 @@ const getTemps = async(req = request, res = response) => {
 		const promises = results.map(el => Temp.create({ name: el }));
 	
 		await Promise.all(promises);
-		const tempsDB = await Temp.findAll();
+		const tempsDB = await Temp.findAll({ attributes: ['id', 'name'] });
 	
 		res.status(200).json({ data: tempsDB });
 

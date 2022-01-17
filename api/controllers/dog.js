@@ -2,8 +2,6 @@ const { request, response } = require('express');
 
 const { Dog, Temp } = require('../models');
 
-const uploadImage = require('../helpers/uploadImage');
-
 
 
 const createDog = async(req = request, res = response) => {
@@ -26,8 +24,7 @@ const createDog = async(req = request, res = response) => {
 
 	try {
 
-		const nameImage = await uploadImage(req.files);
-		const newDog = await Dog.create({ name, weight, height, age, image: nameImage });
+		const newDog = await Dog.create({ name, weight, height, age });
 
 		const promises = temps.map(el => Temp.findOne({ where: { name: el }}));
 		const tempsDB = await Promise.all(promises);

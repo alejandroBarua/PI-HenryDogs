@@ -12,6 +12,9 @@ const validateValuesDog = async(req, res, next) => {
 		temps,
 	} = req.body;
 
+	console.log("name", name);
+
+
 	if(!isText(name)){
 		return res.status(400).json({error: "The name is invalid."})
 	}

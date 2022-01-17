@@ -8,7 +8,7 @@ const getDogById = async(req, res) => {
 		
 		const dog = await Dog.findOne({ 
 			where: { id },
-			attributes: ['id', 'name', 'weight', 'height', 'age']
+			attributes: ['id', 'name', 'weight', 'height', 'age', 'imgUrl']
 		})
 		
 		if(!dog){
@@ -17,8 +17,6 @@ const getDogById = async(req, res) => {
 			})
 		}
 
-		dog.image = `http://localhost:${process.env.PORT}/api/img/${id}`;
-		
 		let temps = await dog.getTemps();
 		temps = temps.map(el => el.name);
 

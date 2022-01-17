@@ -25,7 +25,7 @@ class Server {
 
 		try {
 
-			await db.sequelize.sync({ force: false });
+			await db.sequelize.sync({ force: true });
 			console.log('Database online');
 
 		} catch (error) {

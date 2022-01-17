@@ -1,5 +1,7 @@
 const path = require('path');
 
+const uploadImage = require('../helpers/uploadImage');
+
 const { Dog } = require('../models');
 
 const getImgById = async(req, res) => {
@@ -10,7 +12,7 @@ const getImgById = async(req, res) => {
 		
 		const dog = await Dog.findOne({ 
 			where: { id },
-			attributes: ['image']
+			attributes: ['imgName']
 		})
 		
 		if(!dog){
@@ -19,8 +21,40 @@ const getImgById = async(req, res) => {
 			})
 		}
 
-		const pathImage = path.join(__dirname, '../uploads/', dog.image);
+		const pathImage = path.join(__dirname, '../uploads/', dog.imgName);
 		res.status(200).sendFile(pathImage)
+
+	} catch (error) {
+		
+		console.log(error)
+		return res.status(500).json({ error: "Server error." });
+	}
+
+}
+
+const createImage = async(req, res) => {
+
+	const { id } = req.params;
+
+	try {
+
+		const dog = await Dog.findOne({ where: { id } });
+
+		if(!dog || dog.imgUrl){
+			return res.status(400).json({
+				error: 'The id is not valid.'
+			})
+		}
+
+		const imgName = await uploadImage(req.files, id);
+		const imgUrl = `http://localhost:${process.env.PORT}/api/img/${id}`;
+
+		await Dog.update({ imgName, imgUrl }, { where: { id } });
+
+		res.status(201).json({
+			imgName,
+			imgUrl
+		})
 
 	} catch (error) {
 		
@@ -34,5 +68,5 @@ const getImgById = async(req, res) => {
 
 module.exports = {
 	getImgById,
-
+	createImage
 }
