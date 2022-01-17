@@ -12,13 +12,13 @@ const validateTemps = async(req, res, next) => {
 		const tempsDB = await Promise.all(promises);
 
 		if(tempsDB.includes(null)){
-			return res.status(400).json({ msg: "Temperament does not exist." });
+			return res.status(400).json({ error: "Temperament does not exist." });
 		}
 		
 	} catch (error) {
 		
 		console.log(err)
-		return res.status(500).json({ msg: "Server error." });
+		return res.status(500).json({ error: "Server error." });
 	}
 	
 	next();

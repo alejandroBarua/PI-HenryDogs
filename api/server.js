@@ -10,8 +10,9 @@ class Server {
 		this.app = express();
 		this.port = process.env.PORT || '8080';
 		this.paths = {
+			temp: '/api/temperament',
 			dog: '/api/dog',
-			temp: '/api/temperament'
+			dogs: '/api/dogs'
 		}
 
 		this.dbConnection();
@@ -23,7 +24,7 @@ class Server {
 
 		try {
 
-			await db.sequelize.sync({ force: true });
+			await db.sequelize.sync({ force: false });
 			console.log('Database online');
 
 		} catch (error) {
@@ -39,8 +40,9 @@ class Server {
 
 	routes(){
 
-		this.app.use(this.paths.dog, require('./routes/dog'));
 		this.app.use(this.paths.temp, require('./routes/temp'));
+		this.app.use(this.paths.dog, require('./routes/dog'));
+		this.app.use(this.paths.dogs, require('./routes/dogs'));
 	}
 
 	listen(){

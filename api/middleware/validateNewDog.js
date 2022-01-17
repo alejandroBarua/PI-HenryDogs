@@ -13,23 +13,23 @@ const validateValuesDog = async(req, res, next) => {
 	} = req.body;
 
 	if(!isText(name)){
-		return res.status(400).json({msg: "The name is invalid."})
+		return res.status(400).json({error: "The name is invalid."})
 	}
 
 	if(!isText(temps)){
-		return res.status(400).json({msg: "The temperaments is invalid."})
+		return res.status(400).json({error: "The temperaments is invalid."})
 	}
 
 	if(!isNumber(minWeight, maxWeight)){
-		return res.status(400).json({msg: "The weight is invalid."})
+		return res.status(400).json({error: "The weight is invalid."})
 	}
 
 	if(!isNumber(minHeight, maxHeight)){
-		return res.status(400).json({msg: "The height is invalid."})
+		return res.status(400).json({error: "The height is invalid."})
 	}
 
 	if(!isNumber(minAge, maxAge)){
-		return res.status(400).json({msg: "The age is invalid."})
+		return res.status(400).json({error: "The age is invalid."})
 	}
 
 	next();
@@ -43,12 +43,12 @@ const validateDogNotExist = async(req, res, next) => {
 	try {
 
 		const dog = await Dog.findOne({ where: { name }});
-		if(dog)return res.status(400).json({ msg: 'The name is not available.' });
+		if(dog)return res.status(400).json({ error: 'The name is not available.' });
 		
 	} catch (error) {
 
 		console.log(err)
-		return res.status(500).json({ msg: "Server error." });
+		return res.status(500).json({ error: "Server error." });
 	}
 
 	next();
@@ -62,7 +62,7 @@ const validateImage = async(req, res, next) => {
 
 	if (Object.keys(req.files).length > 1) {
     return res.status(400).json({ 
-			msg: 'Choose only one file.' 
+			error: 'Choose only one file.' 
 		})
   }
 
@@ -73,7 +73,7 @@ const validateImage = async(req, res, next) => {
 
 	if(!validExtensions.includes(type)){
 		return res.status(400).json({ 
-			msg: `The extension ${type} is not valid.`
+			error: `The extension ${type} is not valid.`
 		})
 	}
 

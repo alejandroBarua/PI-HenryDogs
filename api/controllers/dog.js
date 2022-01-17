@@ -34,12 +34,12 @@ const createDog = async(req = request, res = response) => {
 
 		await newDog.addTemps(tempsDB);
 
-		res.status(201).json({ newDog });
+		res.status(201).json({ data: newDog });
 
 	} catch (error) {
 		
 		console.log(error)
-		return res.status(500).json({ msg: "Server error." });		
+		return res.status(500).json({ error: "Server error." });		
 	}
 }
 

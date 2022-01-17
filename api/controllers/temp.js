@@ -13,7 +13,7 @@ const getTemps = async(req = request, res = response) => {
 		let temps = await Temp.findAll({ attributes: ['id', 'name'] });
 	
 		if(temps.length !== 0){
-			return res.status(200).json({ temps });
+			return res.status(200).json({ data: temps });
 		}
 			
 		const { data } = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${process.env.API_KEY}`);
@@ -25,12 +25,12 @@ const getTemps = async(req = request, res = response) => {
 		await Promise.all(promises);
 		const tempsDB = await Temp.findAll();
 	
-		res.status(200).json({ temps: tempsDB });
+		res.status(200).json({ data: tempsDB });
 
 	} catch (error) {
 		
 		console.log(error)
-		return res.status(500).json({ msg: "Server error." });
+		return res.status(500).json({ error: "Server error." });
 	}
 }
 

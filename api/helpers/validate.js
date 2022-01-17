@@ -17,14 +17,20 @@ const isText = (...values) => {
 	if(typeof values[0] === 'object') values = values[0];
 	
 	let res = true;
-	const expReg = /^[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s]+$/i;
+	const regText = /^[A-Za-zñÑ-áéíóúÁÉÍÓÚ\s]+$/i;
 	
 	values.map(el => {
 		
-		if(!expReg.test(el) || !el) res = false;
+		if(!regText.test(el) || !el) res = false;
 	})
 
 	return res;
+}
+
+
+const isId = (id) => {
+	const regId = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+	return regId.test(id);
 }
 
 
@@ -32,5 +38,6 @@ const isText = (...values) => {
 module.exports = {
 	isNumber,
 	isText,
+	isId
 
 }
