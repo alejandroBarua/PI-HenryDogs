@@ -1,3 +1,4 @@
+
 const path = require('path');
 
 const uploadImage = (files, dogId) => {
@@ -22,5 +23,6 @@ const uploadImage = (files, dogId) => {
 		resolve(nameImage);
 	})
 }
+
 
 module.exports = uploadImage;

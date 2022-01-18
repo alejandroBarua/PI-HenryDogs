@@ -3,7 +3,6 @@ const { request, response } = require('express');
 const { Dog, Temp } = require('../models');
 
 
-
 const createDog = async(req = request, res = response) => {
 
 	let { 
@@ -34,12 +33,10 @@ const createDog = async(req = request, res = response) => {
 		res.status(201).json({ data: newDog });
 
 	} catch (error) {
-		
 		console.log(error)
 		return res.status(500).json({ error: "Server error." });		
 	}
 }
-
 
 
 module.exports = {

@@ -1,8 +1,9 @@
 const path = require('path');
 
+const { Dog } = require('../models');
+
 const uploadImage = require('../utils/uploadImage');
 
-const { Dog } = require('../models');
 
 const getImgById = async(req, res) => {
 
@@ -25,12 +26,12 @@ const getImgById = async(req, res) => {
 		res.status(200).sendFile(pathImage)
 
 	} catch (error) {
-		
 		console.log(error)
 		return res.status(500).json({ error: "Server error." });
 	}
 
 }
+
 
 const createImage = async(req, res) => {
 
@@ -57,13 +58,11 @@ const createImage = async(req, res) => {
 		})
 
 	} catch (error) {
-		
 		console.log(error)
 		return res.status(500).json({ error: "Server error." });
 	}
 
 }
-
 
 
 module.exports = {

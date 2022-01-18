@@ -35,7 +35,6 @@ const getTemps = async(req = request, res = response) => {
 }
 
 
-
 module.exports = {
 	getTemps,
 

@@ -14,7 +14,6 @@ const extractTemps = (data) => {
 }
 
 
-
 module.exports = {
 	extractTemps,
 

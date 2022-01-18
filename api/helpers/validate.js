@@ -34,7 +34,6 @@ const isId = (id) => {
 }
 
 
-
 module.exports = {
 	isNumber,
 	isText,

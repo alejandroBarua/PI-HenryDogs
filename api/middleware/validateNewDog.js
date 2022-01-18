@@ -32,7 +32,7 @@ const validateValuesDog = async(req, res, next) => {
 	}
 
 	if(!isNumber(minYear, maxYear)){
-		return res.status(400).json({error: "The age is invalid."})
+		return res.status(400).json({error: "The year is invalid."})
 	}
 
 	next();
@@ -82,7 +82,6 @@ const validateImage = async(req, res, next) => {
 
 	next();
 }
-
 
 
 module.exports = {
