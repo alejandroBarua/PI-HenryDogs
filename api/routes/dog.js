@@ -1,8 +1,12 @@
 const { Router } = require('express');
 const router = Router();
 
-const { validateValuesDog, validateDogNotExist } = require('../middleware/validateNewDog');
-const validateTemps = require('../middleware/validateTemps');
+const { 
+	validateTemps, 
+	validateValuesDog, 
+	validateDogNotExist,
+	
+} = require('../middleware');
 
 const { createDog } = require('../controllers/dog');
 

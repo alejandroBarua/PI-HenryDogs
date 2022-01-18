@@ -1,9 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const getDogByIdAPI = require('../middleware/getDogByIdAPI');
-const validateDogId = require('../middleware/validateDogId');
-
+const { getDogByIdAPI, validateDogId } = require('../middleware');
 const { getDogsAll, getDogByIdDB } = require('../controllers/dogs');
 
 

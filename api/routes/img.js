@@ -3,9 +3,7 @@ const router = Router();
 
 const fileUpload = require('express-fileupload');
 
-const validateDogId = require('../middleware/validateDogId');
-const { validateImage } = require('../middleware/validateNewDog');
-
+const { validateDogId, validateImage } = require('../middleware');
 const { getImgById, createImage } = require('../controllers/img');
 
 
