@@ -5,13 +5,13 @@ const Op = require('sequelize').Op;
 const { Dog } = require('../models');
 
 const { getDogModelApi, getDogModelDB } = require('../utils/getDogModel');
+const pagination = require('../helpers/pagination')
 
 
 const getDogsAll = async(req = request, res = response) => {
 
-	const { name } = req.query;
-	const { connectAPI = true, connectDB = true, filterTemps = [], page = 1, limit = 8 } = req.body;
-
+	const { name, page = 1, limit = 40 } = req.query;
+	const { connectAPI = true, connectDB = true, filterTemps = [] } = req.body;
 	
 	try {
 
@@ -48,10 +48,13 @@ const getDogsAll = async(req = request, res = response) => {
 			dataDB = getDogModelDB(dataDB, filterTemps);
 		}
 
-		const results = [...dataAPI, ...dataDB];
+		let results = [...dataDB, ...dataAPI];
+
+		const total = results.length;
+		results = pagination(results, page, limit);
 
 		res.status(200).json({
-			total: results.length,
+			total,
 			results
 		});
 		

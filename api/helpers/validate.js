@@ -5,7 +5,7 @@ const isNumber = (...values) => {
 
 	values.map(el => {
 
-		if(isNaN(el) || !el) res = false;
+		if(isNaN(el) || !el || Number(el) < 0) res = false;
 	})
 
 	return res;

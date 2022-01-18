@@ -37,7 +37,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull:false
     },
     imgUrl:{
-      type:DataTypes.STRING
+      type:DataTypes.STRING,
+      get() {
+        return `http://localhost:${process.env.PORT}/api/img/${this.getDataValue('id')}`;
+      }
     },
     imgName:{
       type:DataTypes.STRING

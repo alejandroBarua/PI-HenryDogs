@@ -23,7 +23,7 @@ const getImgById = async(req = request, res = response) => {
 			})
 		}
 
-		const pathImage = path.join(__dirname, '../uploads/', dog.imgName);
+		const pathImage = path.join(__dirname, '../uploads/', dog.imgName ? dog.imgName : 'defaultImage.png');
 		res.status(200).sendFile(pathImage)
 
 	} catch (error) {
@@ -42,7 +42,7 @@ const createImage = async(req = request, res = response) => {
 
 		const dog = await Dog.findOne({ where: { id } });
 
-		if(!dog || dog.imgUrl){
+		if(!dog || dog.imgName){
 			return res.status(400).json({
 				error: 'The id is not valid.'
 			})

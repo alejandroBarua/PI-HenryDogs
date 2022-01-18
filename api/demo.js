@@ -1,42 +1,16 @@
 
-const names = [
-	{
-		id: 1,
-		name: "arbol"
-	},
-	{
-		id: 2,
-		name: "amarillo"
-	},
-	{
-		id: 3,
-		name: "azul azul"
-	},
-	{
-		id: 4,
-		name: "tomate"
-	}
+const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-]
+let limit = 3
 
-
-
-const getName = (values, regex) => {
+const pagination = (data, page, limit) => {
 	
-	return values.reduce((beforeValue, el) => {
-
-		if(regex){
-			return regex.test(el.name) ? beforeValue.concat({name: el.name + "hola"}) : beforeValue;
-		}
-
-		return beforeValue.concat({name: el.name + "hola"});
-
-	}, [])
+	const offset = page * limit - limit;
+	return data.slice(offset, page*limit);
 }
 
-const code = 'zx';
-const regName = new RegExp(code, 'i');
+let page = 3
 
-const res = getName(names, regName);
+const res = paginacion(nums, page, limit);
 
 console.log(res);
