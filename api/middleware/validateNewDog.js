@@ -1,8 +1,10 @@
+const { request, response } = require('express');
+
 const { isNumber, isText } = require('../helpers/validate');
 const { Dog } = require('../models');
 
 
-const validateValuesDog = async(req, res, next) => {
+const validateValuesDog = async(req = request, res = response, next) => {
 
 	const { 
 		name, 
@@ -39,7 +41,7 @@ const validateValuesDog = async(req, res, next) => {
 }
 
 
-const validateDogNotExist = async(req, res, next) => {
+const validateDogNotExist = async(req = request, res = response, next) => {
 
 	const { name } = req.body;
 
@@ -58,7 +60,7 @@ const validateDogNotExist = async(req, res, next) => {
 }
 
 
-const validateImage = async(req, res, next) => {
+const validateImage = async(req = request, res = response, next) => {
 
 	if(!req.files) return next();
 	if(!req.files.image) return next();

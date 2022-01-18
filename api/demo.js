@@ -1,19 +1,42 @@
-const num1 = "12a"
-const num2 = "ga2"
-const num3 = 12
+
+const names = [
+	{
+		id: 1,
+		name: "arbol"
+	},
+	{
+		id: 2,
+		name: "amarillo"
+	},
+	{
+		id: 3,
+		name: "azul azul"
+	},
+	{
+		id: 4,
+		name: "tomate"
+	}
+
+]
 
 
-const isNumber = (...values) => {
 
-	let res = true;
+const getName = (values, regex) => {
+	
+	return values.reduce((beforeValue, el) => {
 
-	values.map(el => {
+		if(regex){
+			return regex.test(el.name) ? beforeValue.concat({name: el.name + "hola"}) : beforeValue;
+		}
 
-		if(isNaN(el) || !el) res = false;
-	})
+		return beforeValue.concat({name: el.name + "hola"});
 
-	return res;
+	}, [])
 }
 
-const res = isNumber(num1);
+const code = 'zx';
+const regName = new RegExp(code, 'i');
+
+const res = getName(names, regName);
+
 console.log(res);

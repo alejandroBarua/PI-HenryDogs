@@ -1,6 +1,8 @@
+const { request, response } = require('express');
+
 const { isId } = require('../helpers/validate');
 
-const validateDogId = async(req, res, next) => {
+const validateDogId = async(req = request, res = response, next) => {
 
 	const { id } = req.params;
 

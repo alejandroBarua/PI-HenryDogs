@@ -15,11 +15,11 @@ const createDog = async(req = request, res = response) => {
 
 	temps = [...new Set(temps)];
 
-	const getRange = (min, max) => `${parseInt(min)}-${parseInt(max)}`;
+	const getRange = (min, max) => `${parseInt(min)} - ${parseInt(max)}`;
 
-	const weight = getRange(minWeight, maxWeight);
-	const height = getRange(minHeight, maxHeight);
-	const life_span = getRange(minYear, maxYear);
+	const weight = getRange(minWeight, maxWeight) + ' kg';
+	const height = getRange(minHeight, maxHeight) + ' cm';
+	const life_span = getRange(minYear, maxYear) + ' years';
 
 	try {
 
@@ -30,7 +30,7 @@ const createDog = async(req = request, res = response) => {
 
 		await newDog.addTemps(tempsDB);
 
-		res.status(201).json({ data: newDog });
+		res.status(201).json(newDog);
 
 	} catch (error) {
 		console.log(error)

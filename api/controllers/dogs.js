@@ -1,18 +1,42 @@
+const { request, response } = require('express');
 const axios = require('axios');
+const Op = require('sequelize').Op;
 
 const { Dog } = require('../models');
 
-const getDogModel = require('../utils/getDogModel');
+const { getDogModelApi, getDogModelDB } = require('../utils/getDogModel');
 
 
-const getDogsAll = async(req, res) => {
+const getDogsAll = async(req = request, res = response) => {
 
+	const { name } = req.query;
+
+	
 	try {
+		
+		let { data : dataApi } = name ?
+		await axios.get(`https://api.thedogapi.com/v1/breeds/search?api_key=${process.env.API_KEY}&q=${name}`)
+		: await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${process.env.API_KEY}`);
+		
+		let dataDB = await Dog.findAll({
+			where: {
+				name: {
+					[Op.like]: `%${name}%`
+				}
+			},
+			attributes: ['id', 'name', 'weight', 'height', 'life_span', 'imgUrl'],
+			include: 'Temps'
+		})
+		
+		dataApi = getDogModelApi(dataApi);
+		dataDB = getDogModelDB(dataDB);
 
-		const { data } = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${process.env.API_KEY}`);
-		const results = getDogModel(data);
+		const results = [...dataApi, ...dataDB];
 
-		res.status(200).json(results);
+		res.status(200).json({
+			total: results.length,
+			results
+		});
 		
 	} catch (error) {
 		console.log(error)
@@ -21,7 +45,7 @@ const getDogsAll = async(req, res) => {
 }
 
 
-const getDogByIdDB = async(req, res) => {
+const getDogByIdDB = async(req = request, res = response) => {
 
 	const { id } = req.params;
 

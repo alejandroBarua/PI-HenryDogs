@@ -1,8 +1,10 @@
+const { request, response } = require('express');
+
 const axios = require('axios');
 
-const getDogModel = require('../utils/getDogModel');
+const { getDogModelApi } = require('../utils/getDogModel');
 
-const getDogByIdAPI = async(req, res, next) => {
+const getDogByIdAPI = async(req = request, res = response, next) => {
 
 	const { id } = req.params;
 
@@ -13,7 +15,7 @@ const getDogByIdAPI = async(req, res, next) => {
 
 		if(result.length === 1){
 
-			const dog = getDogModel(result)[0];
+			const dog = getDogModelApi(result)[0];
 			return res.status(200).json(dog);
 		}
 

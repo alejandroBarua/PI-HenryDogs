@@ -1,7 +1,9 @@
+const { request, response } = require('express');
+
 const { Temp } = require('../models');
 
 
-const validateTemps = async(req, res, next) => {
+const validateTemps = async(req = request, res = response, next) => {
 
 	let { temps } = req.body;
 	temps = [...new Set(temps)];

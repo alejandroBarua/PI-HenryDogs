@@ -1,3 +1,4 @@
+const { request, response } = require('express');
 const path = require('path');
 
 const { Dog } = require('../models');
@@ -5,7 +6,7 @@ const { Dog } = require('../models');
 const uploadImage = require('../utils/uploadImage');
 
 
-const getImgById = async(req, res) => {
+const getImgById = async(req = request, res = response) => {
 
 	const { id } = req.params;
 
@@ -33,7 +34,7 @@ const getImgById = async(req, res) => {
 }
 
 
-const createImage = async(req, res) => {
+const createImage = async(req = request, res = response) => {
 
 	const { id } = req.params;
 

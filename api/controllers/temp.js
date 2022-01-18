@@ -11,9 +11,9 @@ const getTemps = async(req = request, res = response) => {
 	try {
 		
 		let temps = await Temp.findAll({ attributes: ['id', 'name'] });
-	
+		
 		if(temps.length !== 0){
-			return res.status(200).json({ data: temps });
+			return res.status(200).json([...temps]);
 		}
 			
 		const { data } = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${process.env.API_KEY}`);
@@ -23,9 +23,9 @@ const getTemps = async(req = request, res = response) => {
 		const promises = results.map(el => Temp.create({ name: el }));
 	
 		await Promise.all(promises);
-		const tempsDB = await Temp.findAll({ attributes: ['id', 'name'] });
+		let tempsDB = await Temp.findAll({ attributes: ['id', 'name'] });
 	
-		res.status(200).json({ data: tempsDB });
+		res.status(200).json([...tempsDB]);
 
 	} catch (error) {
 		
