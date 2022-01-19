@@ -5,36 +5,26 @@ const Op = require('sequelize').Op;
 const { Dog } = require('../models');
 
 const { getDogModelApi, getDogModelDB } = require('../utils/getDogModel');
-const pagination = require('../helpers/pagination')
 
 
 const getDogsAll = async(req = request, res = response) => {
 
-	const { name, page = 1, limit = 40 } = req.query;
-	const { connectAPI = true, connectDB = true, filterTemps = [] } = req.body;
+	const { name } = req.query;
 	
 	try {
 
-		let dataAPI = [],
-			dataDB = [];
-
-		if(connectAPI){
-
-			let { data } = name ?
+		let { data } = name ?
 			await axios.get(`https://api.thedogapi.com/v1/breeds/search?api_key=${process.env.API_KEY}&q=${name}`)
 			: await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${process.env.API_KEY}`);
 
-			dataAPI = getDogModelApi(data, filterTemps);
+		const dataAPI = getDogModelApi(data);
+	
+		const query = {
+			attributes: ['id', 'name', 'weight', 'imgUrl'],
+			include: 'Temps'
 		}
-		
-		if(connectDB){
 
-			const query = {
-				attributes: ['id', 'name', 'weight', 'height', 'life_span', 'imgUrl'],
-				include: 'Temps'
-			}
-
-			dataDB = name ? 
+		let dataDB = name ? 
 			await Dog.findAll({
 				where: {
 					name: {
@@ -44,17 +34,13 @@ const getDogsAll = async(req = request, res = response) => {
 				...query
 			})
 			: await Dog.findAll(query);
-			
-			dataDB = getDogModelDB(dataDB, filterTemps);
-		}
+		
+		dataDB = getDogModelDB(dataDB);
 
 		let results = [...dataDB, ...dataAPI];
 
-		const total = results.length;
-		results = pagination(results, page, limit);
-
 		res.status(200).json({
-			total,
+			total: results.length,
 			results
 		});
 		

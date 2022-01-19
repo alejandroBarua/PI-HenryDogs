@@ -1,52 +1,53 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Container } from '../styles';
 
-import NavBar from './NavBar';
-import logo from '../assets/logo.png';
+import { 
+	NavBar,
+	InputText,
+
+} from './index';
+
+import logo from '../assets/logo-dark.png';
+import iconLupa from '../assets/icons/icon-lupa.png';
+
 
 
 const Header = () => {
 	return (
 		<HeaderStyled>
-			<Flex>
-				<Logo>
-					<img src={logo} alt="logo" />
-					<h2>Hello World</h2>
-				</Logo>
-				<NavBar />
-			</Flex>
+				<Flex>
+					<Link to='/'>
+						<Logo src={logo} alt="puppy" />
+					</Link>
+					<NavBar />
+				</Flex>
+				<InputText 
+					icon={iconLupa}
+					text={'Search dog by breed'} />
 		</HeaderStyled>
 	)
 }
 
-export default Header
+export default Header;
 
-const HeaderStyled = styled.header`
-
-	background-color: ${({theme}) => theme.primary};
-	color: white;
-	justify-content: space-between;
-`
-
-const Flex = styled(Container)`
-
-	align-items: center;
-	display: flex;
-	justify-content: space-between;
-	height: 4rem;
-`
-
-const Logo = styled.div`
+const HeaderStyled = styled.div`
 
 	display: flex;
 	align-items: center;
-	
-	img{
-		width: 40px;
-	}
+	justify-content: space-between;
+	height: 7rem;
 
-	h2{
-		margin-left: 1rem;
-	}
+`
+
+const Flex = styled.div`
+
+	display: flex;
+	align-items: flex-end;
+
+`
+
+const Logo = styled.img`
+	opacity: 0.8;
+	width: 110px;
 `

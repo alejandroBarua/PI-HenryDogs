@@ -14,9 +14,6 @@ const validateValuesDog = async(req = request, res = response, next) => {
 		temps,
 	} = req.body;
 
-	console.log("name", name);
-
-
 	if(!isText(name)){
 		return res.status(400).json({error: "The name is invalid."})
 	}
@@ -25,15 +22,15 @@ const validateValuesDog = async(req = request, res = response, next) => {
 		return res.status(400).json({error: "The temperaments is invalid."})
 	}
 
-	if(!isNumber(minWeight, maxWeight)){
+	if(!isNumber(minWeight, maxWeight) || Number(maxWeight) <= Number(minWeight)){
 		return res.status(400).json({error: "The weight is invalid."})
 	}
 
-	if(!isNumber(minHeight, maxHeight)){
+	if(!isNumber(minHeight, maxHeight) || Number(maxHeight) <= Number(minHeight)){
 		return res.status(400).json({error: "The height is invalid."})
 	}
 
-	if(!isNumber(minYear, maxYear)){
+	if(!isNumber(minYear, maxYear) || Number(maxYear) <= Number(minYear)){
 		return res.status(400).json({error: "The year is invalid."})
 	}
 

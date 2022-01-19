@@ -1,28 +1,66 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+
+
 const NavBar = () => {
+
+	const { pathname } = useLocation();
+
 	return (
 		<NavBarStyled>
-			<NavLink to='/'>Home</NavLink>
-			<NavLink to='/products'>Products</NavLink>
-			<NavLink to='/about'>About us</NavLink>
+			<Item>
+				<NavLink to='/'>Home</NavLink>
+				<Cicle className={pathname === '/' ? 'active' : ''} />
+			</Item>
+			<Item>
+				<NavLink to='/dogs'>Dogs</NavLink>
+				<Cicle className={pathname === '/dogs' ? 'active' : ''} />
+			</Item>
+			<Item>
+				<NavLink to='/create'>Create dog</NavLink>
+				<Cicle className={pathname === '/create' ? 'active' : ''} />
+			</Item>
+			<Item>
+				<NavLink to='/about'>About</NavLink>
+				<Cicle className={pathname === '/about' ? 'active' : ''} />
+			</Item>
 		</NavBarStyled>
 	)
 }
 
-export default NavBar
+export default NavBar;
 
 const NavBarStyled = styled.nav`
 
-	a{
-		color: white;
-		margin-left: 2.2rem;
-		padding-bottom: 0.5rem;
-	}
+	display: flex;
+	margin-left: 1.5rem;
+`
 
-	a.active{
-		border-bottom: solid 2px white;
+const Item = styled.div`
+
+	position: relative;
+	top: -0.8rem;
+	margin-left: 2.2rem;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+
+	a{
+		color: #7E7E7E;
 	}
+`
+
+const Cicle = styled.div`
+
+&.active{
+	background-color: ${({theme}) => theme.colorMedium};
+	border-radius: 50%;
+	height: 0.5rem;
+	width: 0.5rem;
+	position: absolute;
+	top: 1.8rem;
+}
+
 `

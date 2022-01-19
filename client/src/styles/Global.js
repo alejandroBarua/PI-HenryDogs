@@ -3,7 +3,8 @@ import { createGlobalStyle } from "styled-components";
 const GlobalStyles = createGlobalStyle`
 
 	html {
-		color: #222;
+		background-color: #F0F0F0;
+		color: #7E7E7E;
 		box-sizing: border-box;
 		font-size: ${({fontSize = 16}) => `${fontSize}px`};
 		font-family: "Roboto", sans-serif;
@@ -34,18 +35,17 @@ const GlobalStyles = createGlobalStyle`
 
 	input,
 	textarea,
-	button {
+	button,
+	select {
 		outline: none;
 		border: none;
-		padding: 0.7rem;
-
 	}
 	
-	img,
+/* 	img,
 	video {
 		max-width: 100%;
 		height: auto;
-	}
+	} */
 
 	body::-webkit-scrollbar {
 		width: 8px;
