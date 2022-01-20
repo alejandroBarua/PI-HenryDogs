@@ -1,18 +1,20 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 
 
-const Card = ({id, name, weight, img}) => {
+const Card = ({id, name, weight, temps, img}) => {
 
 	return (
-
-		<CardStyled>
-			<img src={img} alt={name} />
-			<h3>{name.length > 24 ? name.slice(0, 24) + '...' : name}</h3>
-			<p>{weight.includes('NaN') ? 'No description': weight}</p>
-		</CardStyled>
+		<Link to={`/dogs/${id}`}>
+			<CardStyled>
+				<img src={img} alt={name} />
+				<h3>{name.length > 24 ? name.slice(0, 24) + '...' : name}</h3>
+				<p>{weight.includes('NaN') ? 'No description': weight}</p>
+			</CardStyled>
+		</Link>
 	)
 }
 
@@ -21,15 +23,18 @@ const CardGroup = () => {
 
 	const dogs = useSelector(state => state.dogs);
 
+
 	return (
 		<Flex>
 		{
-			dogs.map(({id, name, weight, imgUrl}) => (
+			dogs.map(({id, name, weight, temps, imgUrl}) => (
 			
 				<Card 
 					key={id}
+					id={id}
 					name={name}
 					weight={weight}
+					temps={temps}
 					img={imgUrl} />
 			))
 		}

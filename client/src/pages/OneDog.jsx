@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import styled from 'styled-components';
 
-import dogsList from '../data';
+import { dogsList } from '../data';
 
 
 

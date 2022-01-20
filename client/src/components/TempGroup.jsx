@@ -1,11 +1,21 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeFilterTemp, addDogs } from '../store/actions';
+
 import styled from 'styled-components';
 
-
+import { dogsList } from '../data';
 
 const TempItem = ({name}) => {
+
+	const dispatch = useDispatch();
+	const handlerOnRemove = (value) => {
+		dispatch(removeFilterTemp(value));
+		dispatch(addDogs(dogsList));
+	};
+
 	return (
-		<Item>
+		<Item onClick={() => handlerOnRemove(name)}>
 			<span>{name}</span>
 			<span className='btnx'>x</span>
 		</Item>
@@ -15,12 +25,17 @@ const TempItem = ({name}) => {
 
 const TempGroup = () => {
 
-	const temps = ['Active', 'Active', 'Active'];
+	const filterTemps = useSelector(state => state.filterTemps);
 
 	return (
 		<Flex>
 			{
-				temps.map((el, index) => <TempItem key={index} name={el} />)
+				filterTemps.map((el, index) => (
+					
+					<TempItem 
+						key={index} 
+						name={el} />)
+				)
 			}
 		</Flex>
 	)
@@ -47,6 +62,7 @@ const Item = styled.div`
 	padding: 0.1rem 0rem 0.1rem 1rem;
 	margin-right: 0.5rem;
 	margin-bottom: 0.5rem;
+	cursor: pointer;
 	
 	.btnx{
 		font-weight: bold;
@@ -54,7 +70,6 @@ const Item = styled.div`
 	}
 	
 	.btnx:hover{
-		cursor: pointer;
 		color: #e66700;
 	}
 `

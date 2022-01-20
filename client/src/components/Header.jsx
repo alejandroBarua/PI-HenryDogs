@@ -11,9 +11,17 @@ import {
 import logo from '../assets/logo-dark.png';
 import iconLupa from '../assets/icons/icon-lupa.png';
 
+import { dogsList } from '../data';
+
 
 
 const Header = () => {
+
+	const handlePressDogName = (value, isResult) => {
+		console.log(value, isResult);
+	}
+
+
 	return (
 		<HeaderStyled>
 				<Flex>
@@ -24,7 +32,9 @@ const Header = () => {
 				</Flex>
 				<InputText 
 					icon={iconLupa}
-					text={'Search dog by breed'} />
+					text={'Search dog by breed'}
+					results={dogsList.map(el => el.name)}
+					handlePress={handlePressDogName} />
 		</HeaderStyled>
 	)
 }

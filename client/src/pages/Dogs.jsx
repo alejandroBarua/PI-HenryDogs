@@ -5,17 +5,19 @@ import { getDogs } from '../store/actions';
 import styled from 'styled-components';
 
 
+
+
 import { Filters, TempGroup, CardGroup } from '../components';
 
 const Dogs = () => {
 
-	const dispatch = useDispatch();
+/* 	const dispatch = useDispatch();
 	
 	useEffect(() => {
 		
 		dispatch(getDogs());
 		
-	}, []);
+	}, []); */
 
 	return (
 		<DogStyled>

@@ -1,28 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFilterTemp, sortDogsByName, sortDogsByWeight } from '../store/actions';
+
 import styled from 'styled-components';
 
 import { InputText } from './index';
 
 import iconAdd from '../assets/icons/icon-add.png';
 
+
+
 const Filters = () => {
+
+	const dispatch = useDispatch();
+	const { temps, optOrder } = useSelector(state => state);
 
 	const [radioSelected, setRadioSelected] = useState('radio1');
 
 	const handleRadioChange = (e) => setRadioSelected(e.target.value);
-	
 
+	const handlePressTemp = (value, isResult) => {
+		if(isResult) dispatch(addFilterTemp(value));
+	}
+
+	const handleChangeOpt = e => {
+		const optValue = Number(e.target.value);
+		if(optValue === 1 || optValue === 2) return dispatch(sortDogsByName(optValue)); 
+		dispatch(sortDogsByWeight(optValue)); 
+	} 
+	
+	
+	
+	
 	return (
 		<FilterStyled>
 			<OptLeft>
 				<InputText
 					icon={iconAdd}
-					text='Filter by temperament' />
+					text='Filter by temperament'
+					results={temps}
+					handlePress={handlePressTemp} />
 
 				<Flex>
 					<span>Sort by:</span>
 					<SelectStyled>
-						<select defaultValue='1'>
+						<select 
+							defaultValue={optOrder}
+							onChange={handleChangeOpt}>
 							<option value="1">Name A-Z</option>
 							<option value="2">Name Z-A</option>
 							<option value="3">Weight low to high</option>

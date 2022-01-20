@@ -16,7 +16,7 @@ const NavBar = () => {
 			</Item>
 			<Item>
 				<NavLink to='/dogs'>Dogs</NavLink>
-				<Cicle className={pathname === '/dogs' ? 'active' : ''} />
+				<Cicle className={pathname.includes('/dogs') ? 'active' : ''} />
 			</Item>
 			<Item>
 				<NavLink to='/create'>Create dog</NavLink>
