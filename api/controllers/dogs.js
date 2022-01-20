@@ -39,10 +39,7 @@ const getDogsAll = async(req = request, res = response) => {
 
 		let results = [...dataDB, ...dataAPI];
 
-		res.status(200).json({
-			total: results.length,
-			results
-		});
+		res.status(200).json(results);
 		
 	} catch (error) {
 		console.log(error)

@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
+import { Routes, Route, useLocation } from "react-router-dom";
 
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyles from "./styles/Global";
 import { Container } from './styles';
 
@@ -8,7 +9,8 @@ import { Header, Footer } from './components';
 
 import { 
   Home,
-  Dogs
+  Dogs,
+  OneDog
 
 } from './pages';
 
@@ -21,17 +23,37 @@ const theme = {
 /* 930px breakpoint: header, landing */
 
 const App = () => {
+
+	const { pathname } = useLocation();
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
         <Container>
           <Header />
-          <Dogs />
+          <Main>
+            <Routes>
+
+              <Route path="/" element={<Home />} />
+              <Route path="/dogs" element={<Dogs />} />
+              <Route path="/dogs/:idDog" element={<OneDog />} />
+            
+          </Routes>
+          </Main>
         </Container>
-        <Footer />
+        {
+          pathname === '/' || <Footer />
+        }
     </ThemeProvider>
      
   );
 }
 
 export default App;
+
+
+const Main = styled.div`
+
+	min-height: calc(100vh - 9rem);
+
+`

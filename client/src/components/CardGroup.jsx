@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 
-import photoDog from '../assets/images/dW5UucTIW.jpg';
+import dogsList from '../data';
 
 
 const Card = ({id, name, weight, img}) => {
@@ -10,8 +11,8 @@ const Card = ({id, name, weight, img}) => {
 
 		<CardStyled>
 			<img src={img} alt={name} />
-			<h3>{name}</h3>
-			<p>{weight}</p>
+			<h3>{name.length > 24 ? name.slice(0, 24) + '...' : name}</h3>
+			<p>{weight.includes('NaN') ? 'No description': weight}</p>
 		</CardStyled>
 	)
 }
@@ -20,68 +21,26 @@ const Card = ({id, name, weight, img}) => {
 
 const CardGroup = () => {
 
-	const dogs = [
-		{
-			id: 1,
-			name: "Alapaha Blue Blood Bulldog",
-			weight: "23 - 27 kg",
-			image: photoDog
-		},
-		{
-			id: 2,
-			name: "alejandro",
-			weight: "23 - 27 kg",
-			image: photoDog
-		},
-		{
-			id: 1,
-			name: "Alapaha Blue Blood Bulldog",
-			weight: "23 - 27 kg",
-			image: photoDog
-		},
-		{
-			id: 2,
-			name: "alejandro",
-			weight: "23 - 27 kg",
-			image: photoDog
-		},
-		{
-			id: 1,
-			name: "Alapaha Blue Blood Bulldog",
-			weight: "23 - 27 kg",
-			image: photoDog
-		},
-		{
-			id: 2,
-			name: "alejandro",
-			weight: "23 - 27 kg",
-			image: photoDog
-		},
-		{
-			id: 1,
-			name: "Alapaha Blue Blood Bulldog",
-			weight: "23 - 27 kg",
-			image: photoDog
-		},
-		{
-			id: 2,
-			name: "alejandro",
-			weight: "23 - 27 kg",
-			image: photoDog
-		}
-	]
+	const [dogs, setDogs] = useState(dogsList);
 
+/* 	useEffect(() => {
 
+		axios.get(`http://localhost:8081/api/dogs`)
+			.then(({data}) => setDogs(data))
+			.catch(err => console.log(err));
+
+	}, []); */
+	
 	return (
 		<Flex>
 		{
-			dogs.map(({id, name, weight, image}) => (
+			dogs.map(({id, name, weight, imgUrl}) => (
 			
 				<Card 
 					key={id}
 					name={name}
 					weight={weight}
-					img={image} />
+					img={imgUrl} />
 			))
 		}
 		</Flex>
@@ -120,8 +79,9 @@ const CardStyled = styled.div`
 	}
 
 	img{
-		max-width: 237px;
-		min-height: 237px;
+		width: 237px;
+		height: 237px;
 		object-fit: cover;
+		border: solid 1px #eeeeee;
 	}
 `

@@ -22,8 +22,8 @@ const Filters = () => {
 				<Flex>
 					<span>Sort by:</span>
 					<SelectStyled>
-						<select>
-							<option value="1" selected>Name A-Z</option>
+						<select defaultValue='1'>
+							<option value="1">Name A-Z</option>
 							<option value="2">Name Z-A</option>
 							<option value="3">Weight low to high</option>
 							<option value="4">Weight low to low</option>

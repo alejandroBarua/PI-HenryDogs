@@ -37,7 +37,6 @@ const FooterStyled = styled.footer`
 	align-items: center;
 	color: white;
 	background-color: #363636;
-	margin-top: 5rem;
 	padding-top: 2.5rem;
 	padding-bottom: 0.5rem;
 

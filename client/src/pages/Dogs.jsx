@@ -1,15 +1,25 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import styled from 'styled-components';
+
 
 import { Filters, TempGroup, CardGroup } from '../components';
 
 const Dogs = () => {
+
+
 	return (
-		<Fragment>
+		<DogStyled>
 			<Filters />
 			<TempGroup />
 			<CardGroup />
-		</Fragment>
+		</DogStyled>
 	)
 }
 
 export default Dogs;
+
+
+const DogStyled = styled.div`
+
+	margin-bottom: 4rem;
+`

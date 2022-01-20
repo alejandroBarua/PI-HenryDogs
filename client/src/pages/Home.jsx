@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from "react-router-dom";
+
 
 
 import bannerImg from '../assets/images/banner.png';
@@ -13,7 +15,9 @@ const Home = () => {
 				<Flex>
 					<Message>
 						<h1>The best web application to learn everything about your best friend</h1>
-						<Button text='Start discovering' />
+						<Link to='/dogs'>
+							<Button text='Start discovering' />
+						</Link>
 					</Message>
 					<ContactContainer>
 						<Contact />
@@ -29,6 +33,8 @@ const Grid = styled.div`
 
 	display: grid;
 	grid-template-columns: 450px 1fr;
+	grid-template-rows: calc(100vh - 7rem);
+	align-items: end;
 `
 
 const Banner = styled.img`
@@ -37,11 +43,11 @@ const Banner = styled.img`
 `
 
 const Flex = styled.div`
-
+	
 	display: flex;
 	flex-direction: column;
-	justify-content: space-between;
-	align-items: flex-end;
+	justify-content: center;
+	height: 100%;
 `
 
 const Message = styled.div`
@@ -50,8 +56,6 @@ const Message = styled.div`
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	position: relative;
-	top: 150px;
 	width: 450px;
 
 	h1{
@@ -64,6 +68,7 @@ const Message = styled.div`
 
 const ContactContainer = styled.div`
 
-	position: relative;
+	align-self: flex-end;
+	position: absolute;
 	bottom: 2rem;
 `
