@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
-import dogsList from '../data';
 
 
 const Card = ({id, name, weight, img}) => {
@@ -18,19 +17,10 @@ const Card = ({id, name, weight, img}) => {
 }
 
 
-
 const CardGroup = () => {
 
-	const [dogs, setDogs] = useState(dogsList);
+	const dogs = useSelector(state => state.dogs);
 
-/* 	useEffect(() => {
-
-		axios.get(`http://localhost:8081/api/dogs`)
-			.then(({data}) => setDogs(data))
-			.catch(err => console.log(err));
-
-	}, []); */
-	
 	return (
 		<Flex>
 		{

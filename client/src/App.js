@@ -54,6 +54,6 @@ export default App;
 
 const Main = styled.div`
 
-	min-height: calc(100vh - 9rem);
+	min-height: calc(100vh - 7rem);
 
 `

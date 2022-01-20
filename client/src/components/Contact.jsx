@@ -18,19 +18,19 @@ const links = {
 const Contact = ({color = 'dark'}) => {
 	return (
 		<IconGroup>
-			<a href={links.portfolio}>
+			<a href={links.portfolio} target='_blank' rel="noreferrer">
 				<img 
 					className={color === 'dark' ? 'dark' : ''}
 					src={color === 'dark' ? iconPortfolioDark : iconPortfolioLight} 
 					alt="" />
 			</a>
-			<a href={links.linkedin}>
+			<a href={links.linkedin} target='_blank' rel="noreferrer">
 				<img 
 					className={color === 'dark' ? 'dark' : ''}
 					src={color === 'dark' ? iconLinkedinDark : iconLinkedinLight} 
 					alt="" />
 			</a>
-			<a href={links.github}>
+			<a href={links.github} target='_blank' rel="noreferrer">
 				<img 
 					className={color === 'dark' ? 'dark' : ''}
 					src={color === 'dark' ? iconGithubDark : iconGithubLight} 
