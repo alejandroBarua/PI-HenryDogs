@@ -1,25 +1,24 @@
 
 import {
   GET_DOGS,
+	GET_TEMPS,
 	ADD_FILTER_TEMP,
 	REMOVE_FILTER_TEMP,
-	ADD_DOGS,
-	SORT_DOGS_BY_NAME,
-	SORT_DOGS_BY_WEIGHT
+	SET_OPT_ORDER,
+	SET_CONNECT
 
 } from '../actions';
 
-import { dogsList, tempsList } from '../../data';
-
-import { sortNameAZ, sortWeightDES } from '../../helpers/orderFunc';
+import { sortDogs, filterByTemps } from '../../helpers/filterFunc';
 
 
 
 const initialState = {
-	dogs: dogsList,
-	temps: tempsList,
+	dogs: [],
+	temps: [],
 	filterTemps: [],
-	optOrder: 1
+	optOrder: 1,
+	connect: 'dataAll'
 
 }
 
@@ -29,14 +28,21 @@ const rootReducer = (state = initialState, {type, payload}) => {
 
 		case GET_DOGS:
 
+			payload = sortDogs(state.optOrder, payload);
+
+		
+
+			payload = filterByTemps(state.filterTemps, payload);
+
 			return {
 				...state,
-				dogs: !state.filterTemps.length ? 
-								payload : 
-								payload.filter(el => {
-									const interceptionTemps = el.temps.filter(temp => state.filterTemps.includes(temp));
-									return interceptionTemps.length;
-								})
+				dogs: payload
+			}
+		case GET_TEMPS:
+
+			return {
+				...state,
+				temps: payload
 			}
 
 		case ADD_FILTER_TEMP:
@@ -56,33 +62,20 @@ const rootReducer = (state = initialState, {type, payload}) => {
 				filterTemps: state.filterTemps.filter(el => el !== payload)
 			}
 		
-		case ADD_DOGS:
-
-			return {
-				...state,
-				dogs: !state.filterTemps.length ? 
-								payload : 
-								payload.filter(el => {
-									const interceptionTemps = el.temps.filter(temp => state.filterTemps.includes(temp));
-									return interceptionTemps.length === state.filterTemps.length;
-								})
-			}
-
-		case SORT_DOGS_BY_NAME:
+		case SET_OPT_ORDER:
 
 			return {
 				...state,
 				optOrder: payload,
-				dogs: payload === 1 ? [...state.dogs.sort(sortNameAZ)] : [...state.dogs.sort(sortNameAZ).reverse()]
+				dogs: [...sortDogs(payload, state.dogs)]
 			}
-		
-			case SORT_DOGS_BY_WEIGHT:
 
-				return {
-					...state,
-					optOrder: payload,
-					dogs: payload === 3 ? [...state.dogs.sort(sortWeightDES).reverse()] : [...state.dogs.sort(sortWeightDES)]
-				}
+		case SET_CONNECT:
+
+			return {
+				...state,
+				connect: payload
+			}
 		
 		default:
 			return state;

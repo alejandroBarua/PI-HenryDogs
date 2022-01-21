@@ -1,16 +1,26 @@
 
-const dogModel = (el) => {
+const dogModel = (el, moreInfo) => {
 
-	return {
+	const dog = {
 		id: el.id,
 		name: el.name,
 		weight: `${el.weight.metric} kg`,
-		imgUrl: el.image ? el.image.url : `https://cdn2.thedogapi.com/images/${el.reference_image_id}.jpg`,
+		imgUrl: el.image ? 
+							el.image.url : 
+							el.reference_image_id ? 
+							`https://cdn2.thedogapi.com/images/${el.reference_image_id}.jpg` : null,
 		temps: el.temperament ? el.temperament.split(', ') : []
 	}
+
+	if(moreInfo){
+		dog.height = `${el.height.metric} cm`;
+		dog.life_span = el.life_span;
+	}
+
+	return dog;
 }
 
-const getDogModelApi = (dataAPI = []) => dataAPI.map(el => dogModel(el));
+const getDogModelApi = (dataAPI = [], moreInfo = false) => dataAPI.map(el => dogModel(el, moreInfo));
 
 
 const getDogModelDB = (dataDB = []) => {

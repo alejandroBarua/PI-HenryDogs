@@ -1,8 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFilterTemp, sortDogsByName, sortDogsByWeight } from '../store/actions';
+import { 
+	addFilterTemp, 
+	setOptOrder, 
+	setConnect,
+
+} from '../store/actions';
 
 import styled from 'styled-components';
+import { Input } from '../styles';
 
 import { InputText } from './index';
 
@@ -13,11 +19,9 @@ import iconAdd from '../assets/icons/icon-add.png';
 const Filters = () => {
 
 	const dispatch = useDispatch();
-	const { temps, optOrder } = useSelector(state => state);
+	const { temps, optOrder, connect } = useSelector(state => state);
 
-	const [radioSelected, setRadioSelected] = useState('radio1');
-
-	const handleRadioChange = (e) => setRadioSelected(e.target.value);
+	const handleRadioChange = (e) => dispatch(setConnect(e.target.value));
 
 	const handlePressTemp = (value, isResult) => {
 		if(isResult) dispatch(addFilterTemp(value));
@@ -25,13 +29,10 @@ const Filters = () => {
 
 	const handleChangeOpt = e => {
 		const optValue = Number(e.target.value);
-		if(optValue === 1 || optValue === 2) return dispatch(sortDogsByName(optValue)); 
-		dispatch(sortDogsByWeight(optValue)); 
-	} 
-	
-	
-	
-	
+		dispatch(setOptOrder(optValue));
+	}
+
+
 	return (
 		<FilterStyled>
 			<OptLeft>
@@ -62,24 +63,24 @@ const Filters = () => {
 						<input 
 							type="radio" 
 							name="filterRadio" 
-							value='radio1'
-							checked={radioSelected === 'radio1'} 
+							value='dataAll'
+							checked={connect === 'dataAll'} 
 							onChange={handleRadioChange} />
 					</label>
 					<label>Exist
 						<input 
 							type="radio" 
 							name="filterRadio" 
-							value='radio2'
-							checked={radioSelected === 'radio2'} 
+							value='dataAPI'
+							checked={connect === 'dataAPI'} 
 							onChange={handleRadioChange} />
 					</label>
 					<label>Created
 						<input 
 							type="radio" 
 							name="filterRadio" 
-							value='radio3'
-							checked={radioSelected === 'radio3'} 
+							value='dataDB'
+							checked={connect === 'dataDB'} 
 							onChange={handleRadioChange} />
 					</label>
 			</OptRight>

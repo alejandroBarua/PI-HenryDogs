@@ -1,16 +1,18 @@
 import axios from 'axios';
 
 export const GET_DOGS = 'GET_DOGS';
-export const ADD_DOGS = 'ADD_DOGS';
+export const GET_TEMPS = 'GET_TEMPS';
 export const ADD_FILTER_TEMP = 'ADD_FILTER_TEMP';
 export const REMOVE_FILTER_TEMP = 'REMOVE_FILTER_TEMP';
-export const SORT_DOGS_BY_NAME = 'SORT_DOGS_BY_NAME';
-export const SORT_DOGS_BY_WEIGHT = 'SORT_DOGS_BY_WEIGHT';
+export const SET_OPT_ORDER = 'SET_OPT_ORDER';
+export const SET_CONNECT = 'SET_CONNECT';
 
 
-export const getDogs = () => dispatch => {
+export const getDogs = (name = '') => (dispatch, getState) => {
 
-	return axios.get(`http://localhost:8081/api/dogs`)
+  const connect = getState().connect;
+
+	return axios.get(`http://localhost:8081/api/dogs?connect=${connect}&name=${name}`)
           .then(({data}) => {
             dispatch({
                 type: GET_DOGS,
@@ -20,6 +22,23 @@ export const getDogs = () => dispatch => {
           .catch(() => {
             dispatch({
                 type: GET_DOGS,
+                payload: []
+            })
+          })
+}
+
+export const getTemps = () => (dispatch) => {
+
+	return axios.get(`http://localhost:8081/api/temperament`)
+          .then(({data}) => {
+            dispatch({
+                type: GET_TEMPS,
+                payload: data
+            })
+          })
+          .catch(() => {
+            dispatch({
+                type: GET_TEMPS,
                 payload: []
             })
           })
@@ -41,26 +60,18 @@ export const removeFilterTemp = (temp) => {
   }
 }
 
-export const addDogs = (dogs) => {
+export const setOptOrder = (opt) => {
 
 	return {
-    type: ADD_DOGS,
-    payload: dogs,
-  }
-}
-
-export const sortDogsByName = (opt) => {
-
-	return {
-    type: SORT_DOGS_BY_NAME,
+    type: SET_OPT_ORDER,
     payload: opt,
   }
 }
 
-export const sortDogsByWeight = (opt) => {
+export const setConnect = (value) => {
 
 	return {
-    type: SORT_DOGS_BY_WEIGHT,
-    payload: opt,
+    type: SET_CONNECT,
+    payload: value,
   }
 }

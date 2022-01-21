@@ -87,9 +87,9 @@ const InputText = ({ icon, text, width = 200, results = [], handlePress }) => {
 			<Input 
 				placeholder={text} 
 				width={width}
-      	onChange={(e) => handleChangeInput(e)}
+      	onChange={handleChangeInput}
 				value={textInput}
-				onKeyDown={(e) => handleKeyPress(e)} />
+				onKeyDown={handleKeyPress} />
 
 			<Icon src={icon} />
 

@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
-
+import defaultPhoto from '../assets/images/defaultImage.png';
 
 const Card = ({id, name, weight, temps, img}) => {
 
 	return (
 		<Link to={`/dogs/${id}`}>
 			<CardStyled>
-				<img src={img} alt={name} />
+				<img src={img || defaultPhoto} alt={name} />
 				<h3>{name.length > 24 ? name.slice(0, 24) + '...' : name}</h3>
 				<p>{weight.includes('NaN') ? 'No description': weight}</p>
 			</CardStyled>

@@ -9,33 +9,45 @@ const { getDogModelApi, getDogModelDB } = require('../utils/getDogModel');
 
 const getDogsAll = async(req = request, res = response) => {
 
-	const { name } = req.query;
+	const { name, connect } = req.query;
+
+	console.log(connect);
 	
 	try {
 
-		let { data } = name ?
-			await axios.get(`https://api.thedogapi.com/v1/breeds/search?api_key=${process.env.API_KEY}&q=${name}`)
-			: await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${process.env.API_KEY}`);
+		let dataAPI = [], 
+		dataDB = [];
 
-		const dataAPI = getDogModelApi(data);
+		if(connect === 'dataAll' || connect === 'dataAPI'){
+			
+			let { data } = name ?
+				await axios.get(`https://api.thedogapi.com/v1/breeds/search?api_key=${process.env.API_KEY}&q=${name}`)
+				: await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${process.env.API_KEY}`);
 	
-		const query = {
-			attributes: ['id', 'name', 'weight', 'imgUrl'],
-			include: 'Temps'
+			dataAPI = getDogModelApi(data);
 		}
 
-		let dataDB = name ? 
-			await Dog.findAll({
-				where: {
-					name: {
-						[Op.like]: `%${name}%`
-					}
-				},
-				...query
-			})
-			: await Dog.findAll(query);
-		
-		dataDB = getDogModelDB(dataDB);
+	
+		if(connect === 'dataAll' || connect === 'dataDB'){
+
+			const query = {
+				attributes: ['id', 'name', 'weight', 'imgUrl'],
+				include: 'Temps'
+			}
+	
+			dataDB = name ? 
+				await Dog.findAll({
+					where: {
+						name: {
+							[Op.like]: `%${name}%`
+						}
+					},
+					...query
+				})
+				: await Dog.findAll(query);
+			
+			dataDB = getDogModelDB(dataDB);
+		}
 
 		let results = [...dataDB, ...dataAPI];
 

@@ -3,9 +3,12 @@ import styled from 'styled-components';
 
 
 
-const Button = ({text = 'dark', solid}) => {
+const Button = ({text = 'I am a Button', solid, width, onClick}) => {
 	return (
-		<ButtonStyled solid={solid}>{text}</ButtonStyled>
+		<ButtonStyled 
+			solid={solid} 
+			width={width}
+			onClick={onClick}>{text}</ButtonStyled>
 	)
 }
 
@@ -18,6 +21,7 @@ const ButtonStyled = styled.button`
   color: ${({solid, theme}) => solid ? "#F0F0F0" : theme.colorPrimary};
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
 
+	width: ${(props => `${props.width}px` || 'none')};
   font-size: 1em;
 	font-weight: 700;
   padding: 0.5em 1em;

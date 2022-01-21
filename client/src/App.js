@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, useLocation } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { getTemps } from './store/actions';
 
 import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyles from "./styles/Global";
@@ -10,7 +12,9 @@ import { Header, Footer } from './components';
 import { 
   Home,
   Dogs,
-  OneDog
+  OneDog,
+  CreateDog,
+  About
 
 } from './pages';
 
@@ -24,7 +28,15 @@ const theme = {
 
 const App = () => {
 
+	const dispatch = useDispatch();
+
 	const { pathname } = useLocation();
+
+  	useEffect(() => {
+		
+      dispatch(getTemps());
+      
+    }, [])
 
   return (
     <ThemeProvider theme={theme}>
@@ -37,6 +49,8 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/dogs" element={<Dogs />} />
               <Route path="/dogs/:idDog" element={<OneDog />} />
+              <Route path="/create" element={<CreateDog />} />
+              <Route path="/about" element={<About />} />
             
           </Routes>
           </Main>

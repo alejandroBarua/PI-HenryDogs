@@ -1,40 +1,35 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { removeFilterTemp, addDogs } from '../store/actions';
-
 import styled from 'styled-components';
 
-import { dogsList } from '../data';
 
-const TempItem = ({name}) => {
-
-	const dispatch = useDispatch();
-	const handlerOnRemove = (value) => {
-		dispatch(removeFilterTemp(value));
-		dispatch(addDogs(dogsList));
-	};
+const TempItem = ({name, btnRemove = true, handlerOnPress = () => {}}) => {
 
 	return (
-		<Item onClick={() => handlerOnRemove(name)}>
-			<span>{name}</span>
-			<span className='btnx'>x</span>
+		<Item 
+			cursor={`${btnRemove}`} 
+			onClick={() => handlerOnPress(name)} >
+			<Name>{name}</Name>
+			{
+				btnRemove ? <span className='btnx'>x</span> : ''
+			}
+			
 		</Item>
 	)
 }
 
 
-const TempGroup = () => {
-
-	const filterTemps = useSelector(state => state.filterTemps);
+const TempGroup = ({ temps, btnRemove, handlerOnPressItem }) => {
 
 	return (
 		<Flex>
 			{
-				filterTemps.map((el, index) => (
+				temps.map((el, index) => (
 					
 					<TempItem 
 						key={index} 
-						name={el} />)
+						name={el}
+						btnRemove={btnRemove}
+						handlerOnPress={handlerOnPressItem} />)
 				)
 			}
 		</Flex>
@@ -51,7 +46,6 @@ const Flex = styled.div`
 	margin-top: 1rem;
 `
 
-
 const Item = styled.div`
 
 	font-size: 0.9rem;
@@ -59,17 +53,23 @@ const Item = styled.div`
 	color: ${({theme}) => theme.colorPrimary};
 	border: solid 1px ${({theme}) => theme.colorPrimary};
 	border-radius: 1.5rem;
-	padding: 0.1rem 0rem 0.1rem 1rem;
+	padding: 0.15rem 0rem 0rem 0.7rem;
 	margin-right: 0.5rem;
 	margin-bottom: 0.5rem;
-	cursor: pointer;
+	cursor: ${({cursor}) => cursor === 'true' ? 'pointer' : 'auto'};
 	
 	.btnx{
 		font-weight: bold;
-		padding: 0.7rem;
+		padding-right: 0.7rem;
 	}
 	
 	.btnx:hover{
 		color: #e66700;
 	}
 `
+
+const Name = styled.span`
+
+	padding-right: 0.7rem;
+
+` 

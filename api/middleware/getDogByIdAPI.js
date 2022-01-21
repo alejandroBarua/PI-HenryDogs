@@ -10,12 +10,12 @@ const getDogByIdAPI = async(req = request, res = response, next) => {
 
 	try {
 		
-		const { data } = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${process.env.API_KEY}`);
-		const result = data.filter(el => el.id === Number(id));
+		const { data } = await axios.get(`https://api.thedogapi.com/v1/breeds/${id}?api_key=${process.env.API_KEY}`);
 
-		if(result.length === 1){
+		if(Object.keys(data).length !== 0){
 
-			const dog = getDogModelApi(result)[0];
+			const dog = getDogModelApi([data], true)[0];
+
 			return res.status(200).json(dog);
 		}
 

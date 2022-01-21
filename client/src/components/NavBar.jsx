@@ -50,6 +50,10 @@ const Item = styled.div`
 	a{
 		color: #7E7E7E;
 	}
+
+	a:hover{
+		color: ${({theme}) => theme.colorPrimary};
+	}
 `
 
 const Cicle = styled.div`

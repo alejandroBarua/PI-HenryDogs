@@ -1,5 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { getDogs } from '../store/actions';
+
 import styled from 'styled-components';
 
 import { 
@@ -11,14 +14,15 @@ import {
 import logo from '../assets/logo-dark.png';
 import iconLupa from '../assets/icons/icon-lupa.png';
 
-import { dogsList } from '../data';
-
 
 
 const Header = () => {
 
-	const handlePressDogName = (value, isResult) => {
-		console.log(value, isResult);
+	const dispatch = useDispatch();
+	const dogs = useSelector(state => state.dogs);
+
+	const handlePressDogName = (dogName) => {
+		dispatch(getDogs(dogName));
 	}
 
 
@@ -33,7 +37,7 @@ const Header = () => {
 				<InputText 
 					icon={iconLupa}
 					text={'Search dog by breed'}
-					results={dogsList.map(el => el.name)}
+					results={dogs.map(el => el.name)}
 					handlePress={handlePressDogName} />
 		</HeaderStyled>
 	)
