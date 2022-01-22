@@ -22,6 +22,7 @@ const isText = (value) => {
 export const validateInput = (input) => {
 
 	return {
+		...input,
 		name: !isText(input.name),
 		minWeight: !isNumber(input.minWeight) || !minMax(input.minWeight, input.maxWeight),
 		maxWeight: !isNumber(input.maxWeight) || !minMax(input.minWeight, input.maxWeight),
@@ -30,4 +31,14 @@ export const validateInput = (input) => {
 		minYear: !isNumber(input.minYear) || !minMax(input.minYear, input.maxYear),
 		maxYear: !isNumber(input.maxYear) || !minMax(input.minYear, input.maxYear)
 	}
+}
+
+export const validateFile = (file) => {
+
+	if(!file) return true;
+
+	const type = file.type.split('/')[1];
+	const validExtensions = ['png', 'jpg', 'jpeg', 'webp', 'gif'];
+
+	return validExtensions.includes(type);
 }

@@ -8,7 +8,7 @@ import { Input } from '../styles';
 
 import defaultPhoto from '../assets/images/defaultImage.png';
 import iconAdd from '../assets/icons/icon-add.png';
-import { validateInput } from '../helpers/validate';
+import { validateInput, validateFile } from '../helpers/validate';
 import { TempGroup, InputText, Button } from '../components/index';
 
 
@@ -19,6 +19,12 @@ const CreateDog = () => {
 	const cardImage = useRef();
 
 	const { temps } = useSelector(state => state);
+
+	const [sendStatus, setSendStatus] = useState({
+		loading: false,
+		success: false,
+		error: false
+	})
 
 	const [input, setInput] = useState({
 		name: '',
@@ -36,12 +42,44 @@ const CreateDog = () => {
 		minWeight: true,
 		maxWeight: true,
 		minHeight: true,
-		maxHeigt: true,
+		maxHeight: true,
 		minYear: true,
 		maxYear: true,
+		file: false
 	})
-	
+
+	const [isEmpty, setIsEmpty] = useState({
+		name: false,
+		minWeight: false,
+		maxWeight: false,
+		minHeight: false,
+		maxHeight: false,
+		minYear: false,
+		maxYear: false,
+		temps: false
+	})
+
+	const validateEmpty = () => {
+
+		setIsEmpty({
+			name: !input.name,
+			minWeight: !input.minWeight,
+			maxWeight: !input.maxWeight,
+			minHeight: !input.minHeight,
+			maxHeight: !input.maxHeight,
+			minYear: !input.minYear,
+			maxYear: !input.maxYear,
+			temps: !input.temps.length
+		})
+	}
+
 	const handleOnChangeInput = (e) => {
+
+		setIsEmpty({
+			...isEmpty,
+			[e.target.name]: false,
+		})
+
 		setInput({
 			...input,
 			[e.target.name]: e.target.value,
@@ -51,6 +89,11 @@ const CreateDog = () => {
 	const handlePressTemp = (value, isResult) => {
 
 		if(isResult && !input.temps.includes(value)){
+
+			setIsEmpty({
+				...isEmpty,
+				temps: false,
+			})
 			setInput({
 				...input,
 				temps: [value, ...input.temps]
@@ -65,49 +108,6 @@ const CreateDog = () => {
 		})
 	}
 
-	const handleOnSubmitForm = e => {
-		e.preventDefault();
-
-		const objErrors = validateInput(input);
-		setErrors(objErrors);
-
-		if(Object.values(objErrors).includes(true)) return;
-
-		axios.defaults.headers.post['Content-Type'] = 'application/json';
-
-		axios.post(`http://localhost:8081/api/dog`, input)
-		.then(({data}) => {
-
-			const InstFormData = new FormData();
-			const file = inputFile.current.files[0];
-			InstFormData.append('image' , file);
-			
-			axios.post(`http://localhost:8081/api/img/${data.id}`, 
-				InstFormData , 
-				{headers : {'content-type': 'multipart/form-data'}});
-
-		})
-		.catch(err => console.log(err))
-
-	}
-
-	const uploadImage = file => {
-		const fileReader = new FileReader();
-		fileReader.readAsDataURL(file);
-
-		fileReader.addEventListener('load', e => {
-			imagePreview.current.src = e.target.result;
-		})
-
-		cardImage.current.classList.remove('dragActive');
-	}
-	
-	const handleUpdateImage = (e) => {
-
-		uploadImage(e.target.files[0]);
-	}
-
-
 	const handleOnDragOver = (e) => {
 		e.preventDefault();
 		cardImage.current.classList.add('dragActive');
@@ -117,6 +117,30 @@ const CreateDog = () => {
 		e.preventDefault();
 		cardImage.current.classList.remove('dragActive');
 	}
+
+	const uploadImage = file => {
+
+		cardImage.current.classList.remove('dragActive');
+
+		if(!validateFile(file)) {
+
+			setErrors({...errors, file: true});
+			imagePreview.current.src = defaultPhoto;
+			inputFile.current.value = '';
+			return;
+		}
+
+		const fileReader = new FileReader();
+		fileReader.readAsDataURL(file);
+
+		fileReader.addEventListener('load', e => {
+			imagePreview.current.src = e.target.result;
+		})
+
+		setErrors({...errors, file: false});
+	}
+	
+	const handleUpdateImage = (e) => uploadImage(e.target.files[0]);
 
 	const handleOnDrop = (e) => {
 		e.preventDefault();
@@ -128,6 +152,58 @@ const CreateDog = () => {
 	}
 
 
+	const handleOnSubmitForm = e => {
+		e.preventDefault();
+
+		validateEmpty();
+
+		const file = inputFile.current.files[0];
+		const { file : fileError, ...objErrors } = errors;
+		
+		if(Object.values(objErrors).includes(true)) return;
+		if(!input.temps.length) return;
+
+		setSendStatus({
+			loading: true,
+			success: false,
+			error: false
+		})
+
+		axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+		axios.post(`http://localhost:8081/api/dog`, input)
+		.then(({data}) => {
+
+			setSendStatus({
+				loading: false,
+				success: true,
+				error: false
+			})
+
+			if(imagePreview.current.src.includes(defaultPhoto)) return;
+
+			const InstFormData = new FormData();
+			InstFormData.append('image' , file);
+			
+			axios.post(`http://localhost:8081/api/img/${data.id}`, 
+				InstFormData , 
+				{headers : {'content-type': 'multipart/form-data'}}
+			)
+		})
+		.catch(err => {
+
+			console.log(err);
+
+			setSendStatus({
+				loading: false,
+				success: false,
+				error: true
+			})
+		})
+
+	}
+
+	
 	useEffect(() => {
 		setErrors(validateInput(input));
 
@@ -155,6 +231,9 @@ const CreateDog = () => {
 					ref={inputFile}  
 					onChange={handleUpdateImage} />
 				</InputFile>
+				{
+					errors.file && <MsgErrorFile	MsgErrorFile><b>Warning:</b> File extension invalid. The default image will be uploaded.</MsgErrorFile>
+				}
 			</CardStyled>
 			<Characteristics onSubmit={handleOnSubmitForm}>
 				<h2>Dog characteristics</h2>
@@ -166,6 +245,14 @@ const CreateDog = () => {
 						name="name"
 						onChange={handleOnChangeInput} />
 				</Info>
+				{
+					isEmpty.name && <MsgError>Name field is required.</MsgError>
+				}
+				{
+				 !input.name ? '' 
+				 :	errors.name && <MsgError>Please enter only alphabetical letters.</MsgError>
+				}
+
 				<Info>
 					<p>Weight (kg)</p>
 					<div>
@@ -181,6 +268,15 @@ const CreateDog = () => {
 							onChange={handleOnChangeInput} />
 					</div>
 				</Info>
+				
+				{
+					(isEmpty.minWeight || isEmpty.maxWeight) && <MsgError>Weight field is required.</MsgError>
+				}
+				{
+					input.minWeight && input.maxWeight ? 
+					errors.minWeight || errors.maxWeight ? <MsgError>Please enter a valid number.</MsgError> : '' : ''
+				}
+				
 				<Info>
 					<p>Height (cm)</p>
 					<div>
@@ -190,12 +286,21 @@ const CreateDog = () => {
 							name="minHeight"
 							onChange={handleOnChangeInput} />
 						<InputStyled 
-							className={!input.maxHeight ? '' : errors.maxHeigt ? 'error' : 'valid'}
+							className={!input.maxHeight ? '' : errors.maxHeight ? 'error' : 'valid'}
 							placeholder='max' 
 							name="maxHeight"
 							onChange={handleOnChangeInput} />
 					</div>
 				</Info>
+				
+				{
+					(isEmpty.minHeight || isEmpty.maxHeight) &&	<MsgError>Height field is required.</MsgError>
+				}
+				{
+					input.minHeight && input.maxHeight ? 
+					errors.minHeight || errors.maxHeight ? <MsgError>Please enter a valid number.</MsgError> : '' : ''
+				}
+
 				<Info>
 					<p>Life span (year)</p>
 					<div>
@@ -211,6 +316,15 @@ const CreateDog = () => {
 							onChange={handleOnChangeInput} />
 					</div>
 				</Info>
+
+				{
+					(isEmpty.minYear || isEmpty.maxYear) && <MsgError>Life span field is required.</MsgError>
+				}
+				{
+					input.minYear && input.maxYear ? 
+					errors.minYear || errors.maxYear ? <MsgError>Please enter a valid number.</MsgError> : '' : ''
+				}
+
 				<TempContainer>
 					<InputText
 						icon={iconAdd}
@@ -222,9 +336,26 @@ const CreateDog = () => {
 						temps={input.temps}
 						handlerOnPressItem={handlerOnRemove} />
 				</TempContainer>
+
+				{
+				 	isEmpty.temps &&	<MsgErrorTemps>Please enter at least one temperament.</MsgErrorTemps>
+				}
+
 				<Button solid
 					text='Create dog'
 					width={150} />
+
+					{
+					 sendStatus.error &&	<MsgSendErr>The dog was not created.</MsgSendErr>
+					}
+
+					{
+						sendStatus.loading &&	<MsgLoading>...Loading</MsgLoading>
+					}
+
+					{
+						sendStatus.success &&	<MsgSuccess>The dog was created.</MsgSuccess>
+					}
 			</Characteristics>
 		</Flex>
 	)
@@ -300,13 +431,13 @@ const InputFile = styled.div`
 		top: 0;
 		bottom: 0;
 	}
-	
 
 `
 
 const Characteristics = styled.form`
 
 	font-size: 18px;
+	position: relative;
 
 	h2{
 		color: #BBBBBB;
@@ -315,7 +446,7 @@ const Characteristics = styled.form`
 		margin-bottom: 1rem;
 	}
 	
-	height: 484px;
+	min-height: 484px;
 	width: 400px;
 	display: flex;
 	flex-direction: column;
@@ -331,11 +462,11 @@ const Info = styled.div`
 	width: 320px;
 
 	.error{
-		border-color: red;
+		border-color: #ff7777;
 	}
 
 	.valid{
-		border-color: green;
+		border-color: #39bb39;
 	}
 
 `
@@ -358,4 +489,50 @@ const InputName = styled(Input)`
 const InputStyled = styled(InputName)`
 
 	width: 70px;
+`
+
+const  MsgErrorFile = styled.p`
+
+	font-size: 0.85rem;
+	color: ${({theme}) => theme.colorPrimary};
+	position: absolute;
+	bottom: -30px;
+	left: 0;
+`
+
+const MsgError = styled.p`
+
+	text-align: end;	
+	color: #ff7777;
+	font-size: 0.85rem;
+	width: 320px;
+	
+`
+
+const MsgErrorTemps = styled(MsgError)`
+
+	text-align: start;	
+	position: relative;
+	top: -1rem;
+`
+
+const MsgSendStatus = styled.span`
+
+	position: absolute;
+	left: 180px;
+	bottom: 0;
+`
+
+const MsgLoading = styled(MsgSendStatus)`
+	
+`
+
+const MsgSuccess = styled(MsgSendStatus)`
+
+	color: #39bb39;
+`
+
+const MsgSendErr = styled(MsgSendStatus)`
+
+	color: #ff7777;
 `
