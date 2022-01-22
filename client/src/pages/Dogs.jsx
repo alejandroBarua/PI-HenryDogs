@@ -11,13 +11,13 @@ import { Filters, TempGroup, CardGroup } from '../components';
 const Dogs = () => {
 
 	const dispatch = useDispatch();
-	const { connect, filterTemps } = useSelector(state => state);
+	const { connect, filterTemps, searchName } = useSelector(state => state);
 	
 	useEffect(() => {
 		
 		dispatch(getDogs());
 		
-	}, [connect, filterTemps, dispatch]);
+	}, [connect, filterTemps, searchName, dispatch]);
 
 	const handlerOnRemove = (value) => {
 		dispatch(removeFilterTemp(value));

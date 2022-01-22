@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
@@ -8,84 +8,207 @@ import { Input } from '../styles';
 
 import defaultPhoto from '../assets/images/defaultImage.png';
 import iconAdd from '../assets/icons/icon-add.png';
-
+import { validateInput } from '../helpers/validate';
 import { TempGroup, InputText, Button } from '../components/index';
 
 
 const CreateDog = () => {
 
-	const { temps } = useSelector(state => state);
-	const [tempsList, setTempsList] = useState([]);
-	const [name, setName] = useState('');
+	const imagePreview = useRef();
+	const inputFile = useRef();
+	const cardImage = useRef();
 
-	const [dog, setDog] = useState({
+	const { temps } = useSelector(state => state);
+
+	const [input, setInput] = useState({
 		name: '',
-		weight: '',
-		height: '',
-		life_span: '',
-		imgUrl: '',
+		minWeight: '',
+		maxWeight: '',
+		minHeight: '',
+		maxHeight: '',
+		minYear: '',
+		maxYear: '',
 		temps: []
 	})
 
+	const [errors, setErrors] = useState({
+		name: true,
+		minWeight: true,
+		maxWeight: true,
+		minHeight: true,
+		maxHeigt: true,
+		minYear: true,
+		maxYear: true,
+	})
+	
+	const handleOnChangeInput = (e) => {
+		setInput({
+			...input,
+			[e.target.name]: e.target.value,
+		})
+	}
+	
 	const handlePressTemp = (value, isResult) => {
 
-		if(isResult && !tempsList.includes(value)){
-			setTempsList([value, ...tempsList]);
+		if(isResult && !input.temps.includes(value)){
+			setInput({
+				...input,
+				temps: [value, ...input.temps]
+			})
 		} 
 	}
 
 	const handlerOnRemove = (value) => {
-		setTempsList(tempsList.filter(temp => temp !== value))
+		setInput({
+			...input,
+			temps: input.temps.filter(temp => temp !== value)
+		})
+	}
+
+	const handleOnSubmitForm = e => {
+		e.preventDefault();
+
+		const objErrors = validateInput(input);
+		setErrors(objErrors);
+
+		if(Object.values(objErrors).includes(true)) return;
+
+		axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+		axios.post(`http://localhost:8081/api/dog`, input)
+		.then(({data}) => {
+
+			const InstFormData = new FormData();
+			const file = inputFile.current.files[0];
+			InstFormData.append('image' , file);
+			
+			axios.post(`http://localhost:8081/api/img/${data.id}`, 
+				InstFormData , 
+				{headers : {'content-type': 'multipart/form-data'}});
+
+		})
+		.catch(err => console.log(err))
+
+	}
+
+	const uploadImage = file => {
+		const fileReader = new FileReader();
+		fileReader.readAsDataURL(file);
+
+		fileReader.addEventListener('load', e => {
+			imagePreview.current.src = e.target.result;
+		})
+
+		cardImage.current.classList.remove('dragActive');
+	}
+	
+	const handleUpdateImage = (e) => {
+
+		uploadImage(e.target.files[0]);
 	}
 
 
-/* 	useEffect(() => {
+	const handleOnDragOver = (e) => {
+		e.preventDefault();
+		cardImage.current.classList.add('dragActive');
+	}
 
-		axios.get(`http://localhost:8081/api/dogs/${idDog}`)
-			.then(({data}) => setDog(data))
-			.catch(err => console.log(err))
+	const handleOnDragLeave = (e) => {
+		e.preventDefault();
+		cardImage.current.classList.remove('dragActive');
+	}
 
-	}, []); */
+	const handleOnDrop = (e) => {
+		e.preventDefault();
+
+		inputFile.current.files = e.dataTransfer.files;
+
+		const file = inputFile.current.files[0];
+		uploadImage(file);
+	}
+
+
+	useEffect(() => {
+		setErrors(validateInput(input));
+
+	}, [input]);
+	
 
 	return (
 		<Flex>
-			<CardStyled>
-				<img src={dog.imgUrl || defaultPhoto} alt={dog.name} />
-				<h3>{name}</h3>
+			<CardStyled ref={cardImage} onClick={() => inputFile.current.click()}>
+				<img 
+					ref={imagePreview} 
+					src={defaultPhoto} 
+					alt={input.name}
+					onDragOver={handleOnDragOver}
+					onDragLeave={handleOnDragLeave}
+					onDrop={handleOnDrop} />
+				<h3>{input.name}</h3>
+
+				<InputFile 
+					onDragOver={handleOnDragOver}
+					onDragLeave={handleOnDragLeave}
+					onDrop={handleOnDrop} >
+					<input 
+					type="file"
+					ref={inputFile}  
+					onChange={handleUpdateImage} />
+				</InputFile>
 			</CardStyled>
-			<Characteristics>
+			<Characteristics onSubmit={handleOnSubmitForm}>
 				<h2>Dog characteristics</h2>
 				<Info>
 					<p>Name:</p>
 					<InputName
-						placeholder='new breed' name="name"
-						onChange={e => setName(e.target.value)} />
+						className={!input.name ? '' : errors.name ? 'error' : 'valid'}
+						placeholder='new breed' 
+						name="name"
+						onChange={handleOnChangeInput} />
 				</Info>
 				<Info>
 					<p>Weight (kg)</p>
 					<div>
 						<InputStyled 
-							placeholder='min' name="weightMin" />
+							className={!input.minWeight ? '' : errors.minWeight ? 'error' : 'valid'}
+							placeholder='min' 
+							name="minWeight"
+							onChange={handleOnChangeInput} />
 						<InputStyled 
-							placeholder='max' name="weightMax" />
+							className={!input.maxWeight ? '' : errors.maxWeight ? 'error' : 'valid'}
+							placeholder='max' 
+							name="maxWeight"
+							onChange={handleOnChangeInput} />
 					</div>
 				</Info>
 				<Info>
 					<p>Height (cm)</p>
 					<div>
 						<InputStyled 
-							placeholder='min' name="heightMin" />
+							className={!input.minHeight ? '' : errors.minHeight ? 'error' : 'valid'}
+							placeholder='min' 
+							name="minHeight"
+							onChange={handleOnChangeInput} />
 						<InputStyled 
-							placeholder='max' name="heighMax" />
+							className={!input.maxHeight ? '' : errors.maxHeigt ? 'error' : 'valid'}
+							placeholder='max' 
+							name="maxHeight"
+							onChange={handleOnChangeInput} />
 					</div>
 				</Info>
 				<Info>
 					<p>Life span (year)</p>
 					<div>
 						<InputStyled 
-							placeholder='min' name="life_spanMin" />
+							className={!input.minYear ? '' : errors.minYear ? 'error' : 'valid'}
+							placeholder='min' 
+							name="minYear"
+							onChange={handleOnChangeInput} />
 						<InputStyled 
-							placeholder='max' name="life_spanMax" />
+							className={!input.maxYear ? '' : errors.maxYear ? 'error' : 'valid'}
+							placeholder='max' 
+							name="maxYear"
+							onChange={handleOnChangeInput} />
 					</div>
 				</Info>
 				<TempContainer>
@@ -96,13 +219,12 @@ const CreateDog = () => {
 						results={temps}
 						handlePress={handlePressTemp} />
 					<TempGroup 
-						temps={tempsList}
+						temps={input.temps}
 						handlerOnPressItem={handlerOnRemove} />
 				</TempContainer>
 				<Button solid
 					text='Create dog'
-					width={150}
-					onClick={() => console.log(name)} />
+					width={150} />
 			</Characteristics>
 		</Flex>
 	)
@@ -124,12 +246,18 @@ const Flex = styled.div`
 
 const CardStyled = styled.div`
 
+	position: relative;
 	min-width: 260px;
 	height: 484px;
 	padding: 1rem;
 	background-color: white;
 	border-radius: 5px;
 	box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+
+	&.dragActive{
+		background-color: #FFEFD8;
+	}
 	
 	img{
 		width: 400px;
@@ -148,7 +276,35 @@ const CardStyled = styled.div`
 
 `
 
-const Characteristics = styled.div`
+const InputFile = styled.div`
+
+	position: absolute;
+	bottom: 110px;
+  left: 50%;
+  transform: translate(-50%);
+
+	&::before {
+		content: 'Choose a image or drag it here.';
+		background-color: white;
+		color: ${({theme}) => theme.colorPrimary};
+		border: 1px solid ${({theme}) => theme.colorPrimary};
+		border-radius: 5px;
+		padding: 1.2rem;
+		font-weight: 700;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		position: absolute;
+		left: -8px;
+		right: -8px;
+		top: 0;
+		bottom: 0;
+	}
+	
+
+`
+
+const Characteristics = styled.form`
 
 	font-size: 18px;
 
@@ -173,6 +329,14 @@ const Info = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	width: 320px;
+
+	.error{
+		border-color: red;
+	}
+
+	.valid{
+		border-color: green;
+	}
 
 `
 

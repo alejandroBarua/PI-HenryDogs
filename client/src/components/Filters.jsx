@@ -100,6 +100,7 @@ const Flex = styled.div`
 
 const FilterStyled = styled(Flex)`
 
+	margin-top: 1rem;
 	justify-content: space-between;
 `
 

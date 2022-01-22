@@ -6,11 +6,12 @@ export const ADD_FILTER_TEMP = 'ADD_FILTER_TEMP';
 export const REMOVE_FILTER_TEMP = 'REMOVE_FILTER_TEMP';
 export const SET_OPT_ORDER = 'SET_OPT_ORDER';
 export const SET_CONNECT = 'SET_CONNECT';
+export const SET_SEARCH_NAME = 'SET_SEARCH_NAME';
 
 
-export const getDogs = (name = '') => (dispatch, getState) => {
+export const getDogs = () => (dispatch, getState) => {
 
-  const connect = getState().connect;
+  const { connect, searchName: name } = getState();
 
 	return axios.get(`http://localhost:8081/api/dogs?connect=${connect}&name=${name}`)
           .then(({data}) => {
@@ -72,6 +73,14 @@ export const setConnect = (value) => {
 
 	return {
     type: SET_CONNECT,
+    payload: value,
+  }
+}
+
+export const  setSearchName = (value) => {
+
+	return {
+    type: SET_SEARCH_NAME,
     payload: value,
   }
 }

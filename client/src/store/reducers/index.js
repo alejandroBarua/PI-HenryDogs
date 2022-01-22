@@ -5,7 +5,8 @@ import {
 	ADD_FILTER_TEMP,
 	REMOVE_FILTER_TEMP,
 	SET_OPT_ORDER,
-	SET_CONNECT
+	SET_CONNECT,
+	SET_SEARCH_NAME
 
 } from '../actions';
 
@@ -18,7 +19,8 @@ const initialState = {
 	temps: [],
 	filterTemps: [],
 	optOrder: 1,
-	connect: 'dataAll'
+	connect: 'dataAll',
+	searchName: ''
 
 }
 
@@ -75,6 +77,13 @@ const rootReducer = (state = initialState, {type, payload}) => {
 			return {
 				...state,
 				connect: payload
+			}
+
+		case SET_SEARCH_NAME:
+
+			return {
+				...state,
+				searchName: payload
 			}
 		
 		default:

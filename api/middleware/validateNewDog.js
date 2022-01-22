@@ -71,7 +71,7 @@ const validateImage = async(req = request, res = response, next) => {
   const { image } = req.files;
 	const type = image.mimetype.split('/')[1];
 
-	const validExtensions = ['png', 'jpg'];
+	const validExtensions = ['png', 'jpg', 'jpeg', 'webp', 'gif'];
 
 	if(!validExtensions.includes(type)){
 		return res.status(400).json({ 

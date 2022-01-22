@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getDogs } from '../store/actions';
+import { getDogs, setSearchName } from '../store/actions';
 
 import styled from 'styled-components';
 
@@ -19,11 +19,12 @@ import iconLupa from '../assets/icons/icon-lupa.png';
 const Header = () => {
 
 	const dispatch = useDispatch();
-	const dogs = useSelector(state => state.dogs);
+	const { dogs, searchName } = useSelector(state => state);
 
 	const handlePressDogName = (dogName) => {
-		dispatch(getDogs(dogName));
+		dispatch(setSearchName(dogName));
 	}
+	const handleDeleteSearchValue = () => dispatch(setSearchName(''));
 
 
 	return (
@@ -34,11 +35,18 @@ const Header = () => {
 					</Link>
 					<NavBar />
 				</Flex>
-				<InputText 
-					icon={iconLupa}
-					text={'Search dog by breed'}
-					results={dogs.map(el => el.name)}
-					handlePress={handlePressDogName} />
+				<div>
+					<InputText 
+						icon={iconLupa}
+						text={'Search dog by breed'}
+						results={dogs.map(el => el.name)}
+						handlePress={handlePressDogName} />
+						{
+							searchName && <Searched onClick={handleDeleteSearchValue}>
+								<p>{searchName}<span>x</span></p>
+							</Searched>
+						}
+				</div>
 		</HeaderStyled>
 	)
 }
@@ -64,4 +72,33 @@ const Flex = styled.div`
 const Logo = styled.img`
 	opacity: 0.8;
 	width: 110px;
+`
+
+const Searched = styled.div`
+
+	position: absolute;
+	font-size: 0.8rem;
+	cursor: pointer;
+
+	p{
+
+		border-radius: 5px;
+		margin-top: 0.5rem;
+		padding: 0.1rem 0rem 0.1rem 0.5rem;
+		display: inline-block;
+		color: white;
+		background-color: #afafaf;
+		
+		
+	}
+	
+	span{
+		position: relative;
+		padding: 0 0.5rem 0 1rem;
+	}
+
+	span:hover{
+		color: #5c5c5c;
+	}
+
 `

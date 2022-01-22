@@ -8,7 +8,9 @@ const sortAZ = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());
 const InputText = ({ icon, text, width = 200, results = [], handlePress }) => {
 
 	const resultsContainer = useRef();
+	const inputT = useRef();
 
+	const [inputFocus, setInputFocus] = useState(false);
 	const [textInput, setTextInput] = useState('');
 	const [resultsFilter, setResultsFilter] = useState(results.sort(sortAZ));
 	
@@ -63,6 +65,11 @@ const InputText = ({ icon, text, width = 200, results = [], handlePress }) => {
       handleSumPos();
     }
 
+		if(e.key === "Escape") {
+      setInputFocus(false);
+			inputT.current.blur();
+    }
+
     if(e.key === "ArrowUp"){
       handleSubPos();
     }
@@ -81,21 +88,30 @@ const InputText = ({ icon, text, width = 200, results = [], handlePress }) => {
 
 	}, [textInput, results])
 
+	const handleOnBlurInput = () => {
+		setTimeout(() => {
+			setInputFocus(false);
+		}, 300);
+	}
+
 
 	return (
-		<InputContainer >     
+		<InputContainer  >     
 			<Input 
 				placeholder={text} 
 				width={width}
       	onChange={handleChangeInput}
 				value={textInput}
-				onKeyDown={handleKeyPress} />
+				onKeyDown={handleKeyPress}
+				onFocus={() => setInputFocus(true)}
+				onBlur={handleOnBlurInput}
+				ref={inputT} />
 
-			<Icon src={icon} />
+			<Icon src={icon} onClick={() => handleOnSearch(textInput, false)} />
 
 			{
-				textInput ? 
-				<ResultsContainer ref={resultsContainer}>
+				inputFocus ? 
+				<ResultsContainer ref={resultsContainer} >
 					{
 						resultsFilter.map((el, index) => (
 							<Result 
