@@ -14,7 +14,7 @@ import {
 import { sortDogs, filterByTemps } from '../../helpers/filterFunc';
 import { paginate } from '../../helpers/pagination';
 
-
+import { dogsList } from "../../data";
 
 const initialState = {
 	dogs: [],
@@ -25,6 +25,7 @@ const initialState = {
 	searchName: '',
 	total: 0,
 	page: 1,
+	loading: true
 
 }
 
@@ -34,7 +35,7 @@ const rootReducer = (state = initialState, {type, payload}) => {
 
 		case GET_DOGS:
 
-			payload = sortDogs(state.optOrder, payload);
+			payload = sortDogs(state.optOrder, dogsList);
 			payload = filterByTemps(state.filterTemps, payload);
 			const total = payload.length;
 			payload = paginate(payload, state.page, 8);
@@ -42,7 +43,8 @@ const rootReducer = (state = initialState, {type, payload}) => {
 			return {
 				...state,
 				dogs: payload,
-				total
+				total,
+				loading: false
 			}
 		case GET_TEMPS:
 
@@ -57,7 +59,9 @@ const rootReducer = (state = initialState, {type, payload}) => {
 				...state,
 				dogs: state.dogs.filter(el => el.temps.includes(payload)),
 				temps: state.temps.filter(el => el !== payload),
-				filterTemps: [payload, ...state.filterTemps]
+				filterTemps: [payload, ...state.filterTemps],
+				loading: true,
+				page: 1
 			}
 
 		case REMOVE_FILTER_TEMP:
@@ -65,7 +69,9 @@ const rootReducer = (state = initialState, {type, payload}) => {
 			return {
 				...state,
 				temps: [payload, ...state.temps],
-				filterTemps: state.filterTemps.filter(el => el !== payload)
+				filterTemps: state.filterTemps.filter(el => el !== payload),
+				loading: true,
+				page: 1
 			}
 		
 		case SET_OPT_ORDER:
@@ -73,28 +79,35 @@ const rootReducer = (state = initialState, {type, payload}) => {
 			return {
 				...state,
 				optOrder: payload,
-				dogs: [...sortDogs(payload, state.dogs)]
+				dogs: [...sortDogs(payload, state.dogs)],
+				loading: true,
+				page: 1
 			}
 
 		case SET_CONNECT:
 
 			return {
 				...state,
-				connect: payload
+				connect: payload,
+				loading: true,
+				page: 1
 			}
 
 		case SET_SEARCH_NAME:
 
 			return {
 				...state,
-				searchName: payload
+				searchName: payload,
+				loading: true,
+				page: 1
 			}
 
 		case SET_PAGE:
 
 			return {
 				...state,
-				page: payload
+				page: payload,
+				loading: true
 			}
 		
 		default:

@@ -2,21 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import { Button } from '../components';
-
+import { Button } from '.';
 
 import imgDogSleep from '../assets/notfound.png';
 
-const NotFound = ({msg = 'Page not Found', code='404', redirect='/', textBtn='Back home'}) => {
+const NotFound = ({msg = '', code, redirect='/', textBtn}) => {
 
 	return (
 		<NotFoundStyled>
 			<img src={imgDogSleep} alt="" />
-			<p>{'Sorry... ' + code}</p>
+			<p>{`Sorry... ${code ? code : ''}`}</p>
 			<span>{msg}</span>
-			<Link to={redirect}>
-				<Button text={textBtn} />
-			</Link>
+			{
+				code && <Link to={redirect}>
+									<Button text={textBtn} />
+								</Link>
+			}
 		</NotFoundStyled>
 
 	)
@@ -30,7 +31,7 @@ const NotFoundStyled = styled.div`
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	min-height: calc(100vh - 9rem);
+	margin-top: 3rem;
 
 	img{
 		width: 400px;

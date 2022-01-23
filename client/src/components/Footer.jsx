@@ -22,7 +22,7 @@ const Footer = () => {
 					<Contact color='light'/>
 				</ContactContainer>
 			</Flex>
-			<span>© Copyright 2022 | Designed & coded by Alejandro Barua</span>
+			<Copy>© Copyright 2022 | Designed & coded by Alejandro Barua</Copy>
 		</FooterStyled>
 	)
 }
@@ -40,12 +40,9 @@ const FooterStyled = styled.footer`
 	padding-top: 2.5rem;
 	padding-bottom: 0.5rem;
 
-	& > span{
-		font-weight: 300;
-		color: #e6e6e6;
-		margin-top: 0.5rem;
-		font-size: 0.85rem;
-	}
+
+
+
 `
 
 const LogoGroup = styled.div`
@@ -65,11 +62,19 @@ const LogoPuppy = styled.img`
 
 	margin-top: 1rem;
 	width: 80px;
+
+	@media(max-width: 860px){
+		width: 60px;
+	}
 `
 
 const LogoHenry = styled.img`
 
 	width: 170px;
+
+	@media(max-width: 860px){
+		width: 130px;
+	}	
 `
 
 const  ContactContainer = styled.div`
@@ -80,4 +85,17 @@ const  ContactContainer = styled.div`
 		left: 1rem;
 		bottom: 10px;
 	}
+`
+
+const Copy = styled.span`
+
+	font-weight: 300;
+	color: #e6e6e6;
+	margin-top: 0.5rem;
+	font-size: 0.85rem;
+
+	@media(max-width: 860px){
+		font-size: 0.6rem;
+	}
+
 `

@@ -134,10 +134,13 @@ export default InputText;
 
 
 const InputContainer = styled.div`
-
 	position: relative;
 	display: flex;
 	align-items: center;
+
+	@media(max-width: 860px){
+		width: 100%;
+	}	
 	
 `
 
@@ -155,6 +158,11 @@ const Input = styled.input.attrs({ type: 'text' })`
 	&::placeholder{
 		color: #afafaf;
 	}
+
+	@media(max-width: 860px){
+		width: 100%;
+	  padding: 1.3rem 1.5rem;
+	}	
 	
 `
 
@@ -172,6 +180,13 @@ const Icon = styled.img`
 		cursor: pointer;
 		background-color: #f39e00;
 	}
+
+	@media(max-width: 860px){
+		height: 44px;
+		width: 44px;
+		padding: 0.8rem;
+
+	}	
 
 `
 

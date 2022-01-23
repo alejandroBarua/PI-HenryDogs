@@ -8,3 +8,4 @@ export {default as TempGroup} from './TempGroup';
 export {default as CardGroup} from './CardGroup';
 export {default as Footer} from './Footer';
 export {default as Pagination} from './Pagination';
+export {default as NotFound} from './NotFound';

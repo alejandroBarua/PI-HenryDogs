@@ -39,7 +39,7 @@ const Header = () => {
 					</Link>
 					<NavBar />
 				</Flex>
-				<div>
+				<SearchContainer>
 					<InputText 
 						icon={iconLupa}
 						text={'Search dog by breed'}
@@ -50,7 +50,7 @@ const Header = () => {
 								<p>{searchName}<span>x</span></p>
 							</Searched>
 						}
-				</div>
+				</SearchContainer>
 		</HeaderStyled>
 	)
 }
@@ -58,24 +58,40 @@ const Header = () => {
 export default Header;
 
 const HeaderStyled = styled.div`
-
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	height: 7rem;
 
+	@media(max-width: 860px){
+
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 1rem;
+		height: auto;
+		padding-top: 1.5rem;
+	}	
+
 `
 
 const Flex = styled.div`
-
 	display: flex;
 	align-items: flex-end;
+	
+	width: 100%;
+	@media(max-width: 860px){
+		justify-content: space-between;
+	}	
 
 `
 
 const Logo = styled.img`
 	opacity: 0.8;
 	width: 110px;
+
+	@media(max-width: 860px){
+		width: 70px;
+	}
 `
 
 const Searched = styled.div`
@@ -104,5 +120,11 @@ const Searched = styled.div`
 	span:hover{
 		color: #5c5c5c;
 	}
+
+`
+
+const SearchContainer = styled.div`
+
+	width: 100%;
 
 `

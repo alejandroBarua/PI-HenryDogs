@@ -4,14 +4,19 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 import defaultPhoto from '../assets/images/defaultImage.png';
+import loadingImg from '../assets/loading.gif';
+
+import { NotFound } from './index';
+
 
 const Card = ({id, name, weight, temps, img}) => {
 
 	const [showTemps, setShowTemps] = useState(false);
 
+	
 	const handleEnter = () => setShowTemps(true);
 	const handleLeave = () => setShowTemps(false);
-
+	
 	return (
 		<Link to={`/dogs/${id}`}>
 			<CardStyled>
@@ -39,24 +44,33 @@ const Card = ({id, name, weight, temps, img}) => {
 
 
 const CardGroup = () => {
-
-	const dogs = useSelector(state => state.dogs);
-
-
+	
+	const {dogs, loading} = useSelector(state => state);
+	
+	
 	return (
 		<Flex>
-		{
-			dogs.map(({id, name, weight, temps, imgUrl}) => (
-			
-				<Card 
-					key={id}
-					id={id}
-					name={name}
-					weight={weight}
-					temps={temps}
-					img={imgUrl} />
-			))
-		}
+			{
+				loading && <Loading src={loadingImg} alt="" />
+			}
+			{
+				!loading && dogs.map(({id, name, weight, temps, imgUrl}) => (
+				
+					<Card 
+						key={id}
+						id={id}
+						name={name}
+						weight={weight}
+						temps={temps}
+						img={imgUrl} />
+				))
+			}
+			{
+				!loading && !dogs.length && 
+					<NotFoundContainer>
+						<NotFound msg='No matches found'/>
+					</NotFoundContainer>
+			}
 		</Flex>
 	)
 }
@@ -66,12 +80,26 @@ export default CardGroup;
 
 const Flex = styled.div`
 
-	min-height: calc(100vh - 23rem);
+	min-height: calc(100vh - 24rem);
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: 1.55rem;
 	margin-top: 2rem;
+
+	@media(max-width: 919px){
+
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+	}	
+
+	@media(max-width: 720px){
+
+		display: grid;
+		grid-template-columns: 1fr;
+	}	
+
+	
 `
 
 const CardStyled = styled.div`
@@ -99,6 +127,17 @@ const CardStyled = styled.div`
 		object-fit: cover;
 		border: solid 1px #eeeeee;
 	}
+
+	@media(max-width: 919px){
+
+		img{
+			width: 100%;
+			object-position: 20% 10%;
+		}
+	}	
+	
+
+	
 `
 
 const ImageContainer = styled.div`
@@ -123,5 +162,24 @@ const CardTemps = styled.div`
 
 	opacity: ${props => props.show ? '0.8' : '0'};
 	transition: opacity 0.300s;
+	
+	@media(max-width: 919px){
 
+		padding: 2rem;
+	}	
+
+`
+
+const Loading = styled.img`
+
+	position: relative;
+	top: -100px;
+	align-self: center;
+	width: 50px;
+	height: 50px;
+`
+
+const NotFoundContainer = styled.div`
+
+	position: relative;
 `

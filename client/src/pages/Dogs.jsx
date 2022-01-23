@@ -17,6 +17,7 @@ const Dogs = () => {
 
 	const dispatch = useDispatch();
 	const { connect, filterTemps, searchName, optOrder, page } = useSelector(state => state);
+
 	
 	useEffect(() => {
 		
@@ -46,5 +47,6 @@ export default Dogs;
 
 const DogStyled = styled.div`
 
-	margin-bottom: 4rem;
+	position: relative;
+	margin-bottom: 8rem;
 `

@@ -8,6 +8,12 @@ export const Container = styled.div`
   padding-left: 40px;
   padding-right: 40px;
 
+	@media(max-width: 860px){
+
+		padding-left: 20px;
+  	paing-right: 20px;
+	}	
+
 `
 export const Flex = styled.div`
 

@@ -47,6 +47,11 @@ export default Pagination;
 
 const Flex = styled.div`
 
+	position: absolute;
+	bottom: -70px;
+	left: 0;
+	right: 0;
+
 	display: flex;
 	justify-content: center;
 	margin-top: 3rem;

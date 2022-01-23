@@ -95,20 +95,40 @@ const Flex = styled.div`
 
 	display: flex;
 	align-items: center;
+	width: 100%;
 
 `
 
-const FilterStyled = styled(Flex)`
+const FilterStyled = styled.div`
 
 	margin-top: 1rem;
+	display: flex;
+	align-items: center;
 	justify-content: space-between;
+
+	@media(max-width: 860px){
+		flex-direction: column;
+		align-items: flex-start;
+	}	
 `
 
-const OptLeft = styled(Flex)`
+const OptLeft = styled.div`
+	width: 100%;
+	display: flex;
+	align-items: center;
 
 	span{
 		margin-left: 2rem;
 	}
+
+	@media(max-width: 860px){
+		flex-direction: column;
+		align-items: flex-start;
+
+		span{
+			display: none;
+		}
+	}	
 `
 
 const SelectStyled = styled.div`
@@ -141,6 +161,14 @@ const SelectStyled = styled.div`
     appearance: none;
 	}
 
+	@media(max-width: 860px){
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+		margin-left: 0rem;
+		width: 100%;
+	  padding: 0.20rem 0.4rem;
+	}	
+
 `
 
 const OptRight = styled.form`
@@ -154,5 +182,19 @@ const OptRight = styled.form`
 		top: 1px;
 		margin-left: 0.5rem;
 	}
+
+	@media(max-width: 860px){
+
+		display: flex;
+		justify-content: flex-end;
+		width: 100%;
+		position: relative;
+		right: 3px;
+
+		label{
+			margin-left: 2.5rem;
+		}
+
+	}	
 
 `

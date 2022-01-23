@@ -33,9 +33,13 @@ const NavBar = () => {
 export default NavBar;
 
 const NavBarStyled = styled.nav`
-
 	display: flex;
 	margin-left: 1.5rem;
+
+	@media(max-width: 860px){
+
+		margin-left: 0.5rem;
+	}	
 `
 
 const Item = styled.div`
@@ -54,6 +58,10 @@ const Item = styled.div`
 	a:hover{
 		color: ${({theme}) => theme.colorPrimary};
 	}
+
+	@media(max-width: 860px){
+		margin-left: 1rem;
+	}	
 `
 
 const Cicle = styled.div`

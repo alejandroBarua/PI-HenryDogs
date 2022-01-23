@@ -7,7 +7,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyles from "./styles/Global";
 import { Container } from './styles';
 
-import { Header, Footer } from './components';
+import { Header, Footer, NotFound } from './components';
 
 import { 
   Home,
@@ -15,7 +15,6 @@ import {
   OneDog,
   CreateDog,
   About,
-  NotFound
 
 } from './pages';
 
@@ -25,7 +24,8 @@ const theme = {
   colorLight: '#FFEFD8'
 }
 
-/* 930px breakpoint: header, landing */
+/* 919px breakpoint: cards agrandar de a dos */
+/* 860px breakpoint: header, filtros */
 
 const App = () => {
 
@@ -52,7 +52,13 @@ const App = () => {
               <Route path="/dogs/:idDog" element={<OneDog />} />
               <Route path="/create" element={<CreateDog />} />
               <Route path="/about" element={<About />} />
-              <Route path="*" element={<NotFound />} />
+              <Route path="*" element={
+                  <NotFound 
+                    msg = 'Page not Found'
+                    code='404'
+                    redirect='/'
+                    textBtn='Back home' />
+              } />
             
           </Routes>
           </Main>
@@ -69,7 +75,5 @@ export default App;
 
 
 const Main = styled.div`
-
-	min-height: calc(100vh - 7rem);
 
 `
