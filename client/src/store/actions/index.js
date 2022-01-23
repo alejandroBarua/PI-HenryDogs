@@ -7,6 +7,7 @@ export const REMOVE_FILTER_TEMP = 'REMOVE_FILTER_TEMP';
 export const SET_OPT_ORDER = 'SET_OPT_ORDER';
 export const SET_CONNECT = 'SET_CONNECT';
 export const SET_SEARCH_NAME = 'SET_SEARCH_NAME';
+export const SET_PAGE = 'SET_PAGE';
 
 
 export const getDogs = () => (dispatch, getState) => {
@@ -82,5 +83,13 @@ export const  setSearchName = (value) => {
 	return {
     type: SET_SEARCH_NAME,
     payload: value,
+  }
+}
+
+export const  setPage = (page) => {
+
+	return {
+    type: SET_PAGE,
+    payload: page,
   }
 }

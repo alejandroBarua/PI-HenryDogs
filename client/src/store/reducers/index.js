@@ -6,11 +6,13 @@ import {
 	REMOVE_FILTER_TEMP,
 	SET_OPT_ORDER,
 	SET_CONNECT,
-	SET_SEARCH_NAME
+	SET_SEARCH_NAME,
+	SET_PAGE
 
 } from '../actions';
 
 import { sortDogs, filterByTemps } from '../../helpers/filterFunc';
+import { paginate } from '../../helpers/pagination';
 
 
 
@@ -20,7 +22,9 @@ const initialState = {
 	filterTemps: [],
 	optOrder: 1,
 	connect: 'dataAll',
-	searchName: ''
+	searchName: '',
+	total: 0,
+	page: 1,
 
 }
 
@@ -31,14 +35,14 @@ const rootReducer = (state = initialState, {type, payload}) => {
 		case GET_DOGS:
 
 			payload = sortDogs(state.optOrder, payload);
-
-		
-
 			payload = filterByTemps(state.filterTemps, payload);
+			const total = payload.length;
+			payload = paginate(payload, state.page, 8);
 
 			return {
 				...state,
-				dogs: payload
+				dogs: payload,
+				total
 			}
 		case GET_TEMPS:
 
@@ -84,6 +88,13 @@ const rootReducer = (state = initialState, {type, payload}) => {
 			return {
 				...state,
 				searchName: payload
+			}
+
+		case SET_PAGE:
+
+			return {
+				...state,
+				page: payload
 			}
 		
 		default:

@@ -47,6 +47,7 @@ export default CardGroup;
 
 const Flex = styled.div`
 
+	min-height: calc(100vh - 23rem);
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;

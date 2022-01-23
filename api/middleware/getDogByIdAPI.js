@@ -8,6 +8,8 @@ const getDogByIdAPI = async(req = request, res = response, next) => {
 
 	const { id } = req.params;
 
+	console.log(id);
+
 	try {
 		
 		const { data } = await axios.get(`https://api.thedogapi.com/v1/breeds/${id}?api_key=${process.env.API_KEY}`);

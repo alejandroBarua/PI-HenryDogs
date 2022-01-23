@@ -4,20 +4,25 @@ import { getDogs, removeFilterTemp } from '../store/actions';
 
 import styled from 'styled-components';
 
-import { Filters, TempGroup, CardGroup } from '../components';
+import { 
+	Filters, 
+	TempGroup, 
+	CardGroup,
+	Pagination 
+} from '../components';
 
 
 
 const Dogs = () => {
 
 	const dispatch = useDispatch();
-	const { connect, filterTemps, searchName } = useSelector(state => state);
+	const { connect, filterTemps, searchName, optOrder, page } = useSelector(state => state);
 	
 	useEffect(() => {
 		
 		dispatch(getDogs());
 		
-	}, [connect, filterTemps, searchName, dispatch]);
+	}, [connect, filterTemps, searchName, optOrder, page, dispatch]);
 
 	const handlerOnRemove = (value) => {
 		dispatch(removeFilterTemp(value));
@@ -31,6 +36,7 @@ const Dogs = () => {
 				temps={filterTemps} 
 				handlerOnPressItem={handlerOnRemove} />
 			<CardGroup />
+			<Pagination />
 		</DogStyled>
 	)
 }

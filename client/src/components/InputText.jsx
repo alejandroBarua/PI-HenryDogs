@@ -111,7 +111,7 @@ const InputText = ({ icon, text, width = 200, results = [], handlePress }) => {
 
 			{
 				inputFocus ? 
-				<ResultsContainer ref={resultsContainer} >
+				<ResultsContainer ref={resultsContainer} width={width} >
 					{
 						resultsFilter.map((el, index) => (
 							<Result 
@@ -182,7 +182,7 @@ const ResultsContainer = styled.div`
 	z-index: 1000;
 	background-color: white;
 	opacity: 0.9;
-	width: 235px;
+	width: ${(props => `calc(${props.width}px + 32px)`)};
 	max-height: 145px;
 	overflow: hidden;	
 	overflow-y: auto;

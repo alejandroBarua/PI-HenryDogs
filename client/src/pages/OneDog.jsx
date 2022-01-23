@@ -20,6 +20,8 @@ const OneDog = () => {
 		temps: []
 	})
 
+	console.log(idDog);
+
 	useEffect(() => {
 
 		axios.get(`http://localhost:8081/api/dogs/${idDog}`)
