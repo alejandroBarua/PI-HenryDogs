@@ -1,4 +1,4 @@
-const getDogByIdAPI = require('./getDogByIdAPI');
+const getDogByIdDB = require('./getDogByIdDB');
 const validateDogId = require('./validateDogId');
 const validateTemps = require('./validateTemps');
 const { 	
@@ -10,7 +10,7 @@ const {
 
 
 module.exports = {
-	getDogByIdAPI,
+	getDogByIdDB,
 	validateDogId,
 	validateTemps,
 	validateValuesDog,

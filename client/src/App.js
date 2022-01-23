@@ -14,7 +14,8 @@ import {
   Dogs,
   OneDog,
   CreateDog,
-  About
+  About,
+  NotFound
 
 } from './pages';
 
@@ -51,6 +52,7 @@ const App = () => {
               <Route path="/dogs/:idDog" element={<OneDog />} />
               <Route path="/create" element={<CreateDog />} />
               <Route path="/about" element={<About />} />
+              <Route path="*" element={<NotFound />} />
             
           </Routes>
           </Main>

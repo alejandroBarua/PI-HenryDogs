@@ -11,8 +11,6 @@ const getDogsAll = async(req = request, res = response) => {
 
 	const { name, connect } = req.query;
 
-	console.log(connect);
-	
 	try {
 
 		let dataAPI = [], 
@@ -60,47 +58,34 @@ const getDogsAll = async(req = request, res = response) => {
 }
 
 
-const getDogByIdDB = async(req = request, res = response) => {
+const getDogByIdAPI = async(req = request, res = response) => {
 
 	const { id } = req.params;
 
 	try {
-
-		const dogDB = await Dog.findOne({ 
-			where: { id },
-			attributes: ['id', 'name', 'weight', 'height', 'life_span', 'imgUrl']
-		})
 		
-		if(!dogDB){
+		const { data } = await axios.get(`https://api.thedogapi.com/v1/breeds/${id}?api_key=${process.env.API_KEY}`);
+
+		if(Object.keys(data).length === 0) {
+
 			return res.status(400).json({
 				error: 'The id is not valid.'
 			})
 		}
-
-		const { name, weight, height, life_span, imgUrl } = dogDB;
-
-		let temps = await dogDB.getTemps();
-		temps = temps.map(el => el.name);
-
-		res.status(200).json({
-			id,
-			name, 
-			weight, 
-			height, 
-			life_span, 
-			imgUrl,
-			temps
-		})
-
+			
+		const dog = getDogModelApi([data], true)[0];
+		res.status(200).json(dog);
+		
 	} catch (error) {
 		console.log(error)
 		return res.status(500).json({ error: "Server error." });
 	}
+
 }
 
 
 module.exports = {
 	getDogsAll,
-	getDogByIdDB,
+	getDogByIdAPI,
 
 }

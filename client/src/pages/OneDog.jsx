@@ -20,7 +20,6 @@ const OneDog = () => {
 		temps: []
 	})
 
-	console.log(idDog);
 
 	useEffect(() => {
 
@@ -41,7 +40,11 @@ const OneDog = () => {
 				<Info>
 					<p>Weight:</p>
 					<div>
-						<span>{dog.weight}</span>
+						<span>{dog.weight.includes('NaN') ? 
+							dog.weight.includes('-') ? 
+								dog.weight.split('NaN').join('').split('-').join('').trim()
+								: 'No value'
+							: dog.weight}</span>
 					</div>
 				</Info>
 				<Info>
@@ -74,7 +77,7 @@ const Flex = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 2rem;
+	gap: 3rem;
 	min-height: calc(100vh - 7rem);
 	margin-bottom: 3rem;
 

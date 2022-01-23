@@ -20,13 +20,13 @@ const CreateDog = () => {
 
 	const { temps } = useSelector(state => state);
 
-	const [sendStatus, setSendStatus] = useState({
+	const initialSendStatus = {
 		loading: false,
 		success: false,
 		error: false
-	})
+	}
 
-	const [input, setInput] = useState({
+	const initialInput = {
 		name: '',
 		minWeight: '',
 		maxWeight: '',
@@ -35,9 +35,9 @@ const CreateDog = () => {
 		minYear: '',
 		maxYear: '',
 		temps: []
-	})
+	}
 
-	const [errors, setErrors] = useState({
+	const initialErrors = {
 		name: true,
 		minWeight: true,
 		maxWeight: true,
@@ -46,9 +46,9 @@ const CreateDog = () => {
 		minYear: true,
 		maxYear: true,
 		file: false
-	})
+	}
 
-	const [isEmpty, setIsEmpty] = useState({
+	const initialIsEmpty = {
 		name: false,
 		minWeight: false,
 		maxWeight: false,
@@ -57,7 +57,12 @@ const CreateDog = () => {
 		minYear: false,
 		maxYear: false,
 		temps: false
-	})
+	}
+
+	const [sendStatus, setSendStatus] = useState(initialSendStatus);
+	const [input, setInput] = useState(initialInput);
+	const [errors, setErrors] = useState(initialErrors);
+	const [isEmpty, setIsEmpty] = useState(initialIsEmpty);
 
 	const validateEmpty = () => {
 
@@ -151,6 +156,18 @@ const CreateDog = () => {
 		uploadImage(file);
 	}
 
+	const resetForm = (e) => {
+
+		e.target.reset();
+
+		setInput(initialInput);
+		setErrors(initialErrors);
+		setIsEmpty(initialIsEmpty);
+
+		imagePreview.current.src = defaultPhoto;
+		inputFile.current.value = '';
+	}
+
 
 	const handleOnSubmitForm = e => {
 		e.preventDefault();
@@ -180,15 +197,17 @@ const CreateDog = () => {
 				error: false
 			})
 
+			resetForm(e);
+			
 			if(imagePreview.current.src.includes(defaultPhoto)) return;
-
+			
 			const InstFormData = new FormData();
 			InstFormData.append('image' , file);
 			
 			axios.post(`http://localhost:8081/api/img/${data.id}`, 
-				InstFormData , 
-				{headers : {'content-type': 'multipart/form-data'}}
-			)
+			InstFormData , 
+			{headers : {'content-type': 'multipart/form-data'}})
+
 		})
 		.catch(err => {
 
@@ -200,15 +219,20 @@ const CreateDog = () => {
 				error: true
 			})
 		})
+		.finally(res => {
+			
+			setTimeout(() => {
 
+				setSendStatus(initialSendStatus);
+			}, 5000);
+		})
 	}
 
-	
 	useEffect(() => {
 		setErrors(validateInput(input));
 
 	}, [input]);
-	
+
 
 	return (
 		<Flex>
@@ -346,7 +370,7 @@ const CreateDog = () => {
 					width={150} />
 
 					{
-					 sendStatus.error &&	<MsgSendErr>The dog was not created.</MsgSendErr>
+					 sendStatus.error &&	<MsgSendErr>Please try again to create.</MsgSendErr>
 					}
 
 					{
@@ -354,8 +378,9 @@ const CreateDog = () => {
 					}
 
 					{
-						sendStatus.success &&	<MsgSuccess>The dog was created.</MsgSuccess>
+						sendStatus.success && <MsgSuccess>The dog was created.</MsgSuccess>
 					}
+					
 			</Characteristics>
 		</Flex>
 	)

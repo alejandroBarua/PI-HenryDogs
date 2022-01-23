@@ -54,6 +54,7 @@ const createImage = async(req = request, res = response) => {
 		await Dog.update({ imgName, imgUrl }, { where: { id } });
 
 		res.status(201).json({
+			id,
 			imgName,
 			imgUrl
 		})

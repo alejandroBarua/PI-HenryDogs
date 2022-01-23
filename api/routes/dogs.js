@@ -1,16 +1,15 @@
 const { Router } = require('express');
 const router = Router();
 
-const { getDogByIdAPI, validateDogId } = require('../middleware');
-const { getDogsAll, getDogByIdDB } = require('../controllers/dogs');
+const { getDogByIdDB } = require('../middleware');
+const { getDogsAll, getDogByIdAPI } = require('../controllers/dogs');
 
 
 router.get('/', getDogsAll);
 
 router.get('/:id', 
-	getDogByIdAPI, 
-	validateDogId,
-	getDogByIdDB);
+	getDogByIdDB,
+	getDogByIdAPI)
 
 
 module.exports = router;

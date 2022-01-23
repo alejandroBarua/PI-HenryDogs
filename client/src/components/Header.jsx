@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { getDogs, setSearchName } from '../store/actions';
+import { setSearchName } from '../store/actions';
 
 import styled from 'styled-components';
 
@@ -18,11 +19,14 @@ import iconLupa from '../assets/icons/icon-lupa.png';
 
 const Header = () => {
 
+  const navigate = useNavigate();
+
 	const dispatch = useDispatch();
 	const { dogs, searchName } = useSelector(state => state);
 
 	const handlePressDogName = (dogName) => {
 		dispatch(setSearchName(dogName));
+    navigate("/dogs");
 	}
 	const handleDeleteSearchValue = () => dispatch(setSearchName(''));
 
