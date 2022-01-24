@@ -61,6 +61,11 @@ const Item = styled.div`
 
 	@media(max-width: 860px){
 		margin-left: 1rem;
+	}
+	@media(max-width: 400px){
+		a{
+			font-size: 12.6px;
+		}
 	}	
 `
 

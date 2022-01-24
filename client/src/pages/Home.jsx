@@ -35,11 +35,21 @@ const Grid = styled.div`
 	grid-template-columns: 450px 1fr;
 	grid-template-rows: calc(100vh - 7rem);
 	align-items: end;
+
+	@media(max-width: 970px){
+		display: block;
+	}
 `
 
 const Banner = styled.img`
 	
 	width: 440px;
+
+	@media(max-width: 970px){
+		position: absolute;
+		bottom: 0;
+		width: 60%;
+	}
 `
 
 const Flex = styled.div`
@@ -48,6 +58,11 @@ const Flex = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	height: 100%;
+
+	@media(max-width: 970px){
+		margin-top: 4rem;
+	}
+
 `
 
 const Message = styled.div`
@@ -62,6 +77,14 @@ const Message = styled.div`
 		font-family: 'Montserrat', sans-serif;
 		color: #616161;
 		margin-bottom: 1rem;
+	}
+
+	@media(max-width: 550px){
+		z-index: 100;
+		width: 100%;
+		h1{
+			font-size: 3vh;
+		}
 	}
 
 `

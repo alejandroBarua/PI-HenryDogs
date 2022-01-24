@@ -108,8 +108,6 @@ const Searched = styled.div`
 		display: inline-block;
 		color: white;
 		background-color: #afafaf;
-		
-		
 	}
 	
 	span{
