@@ -67,7 +67,7 @@ const HeaderStyled = styled.div`
 
 		flex-direction: column;
 		align-items: flex-start;
-		gap: 1rem;
+		gap: 2rem;
 		height: auto;
 		padding-top: 1.5rem;
 	}	
@@ -125,6 +125,8 @@ const Searched = styled.div`
 
 const SearchContainer = styled.div`
 
-	width: 100%;
+	@media(max-width: 860px){
+		width: 100%;
+	}	
 
 `

@@ -279,7 +279,7 @@ const CreateDog = () => {
 
 				<Info>
 					<p>Weight (kg)</p>
-					<div>
+					<RangeContainer>
 						<InputStyled 
 							className={!input.minWeight ? '' : errors.minWeight ? 'error' : 'valid'}
 							placeholder='min' 
@@ -290,7 +290,7 @@ const CreateDog = () => {
 							placeholder='max' 
 							name="maxWeight"
 							onChange={handleOnChangeInput} />
-					</div>
+					</RangeContainer>
 				</Info>
 				
 				{
@@ -303,7 +303,7 @@ const CreateDog = () => {
 				
 				<Info>
 					<p>Height (cm)</p>
-					<div>
+					<RangeContainer>
 						<InputStyled 
 							className={!input.minHeight ? '' : errors.minHeight ? 'error' : 'valid'}
 							placeholder='min' 
@@ -314,7 +314,7 @@ const CreateDog = () => {
 							placeholder='max' 
 							name="maxHeight"
 							onChange={handleOnChangeInput} />
-					</div>
+					</RangeContainer>
 				</Info>
 				
 				{
@@ -327,7 +327,7 @@ const CreateDog = () => {
 
 				<Info>
 					<p>Life span (year)</p>
-					<div>
+					<RangeContainer>
 						<InputStyled 
 							className={!input.minYear ? '' : errors.minYear ? 'error' : 'valid'}
 							placeholder='min' 
@@ -338,7 +338,7 @@ const CreateDog = () => {
 							placeholder='max' 
 							name="maxYear"
 							onChange={handleOnChangeInput} />
-					</div>
+					</RangeContainer>
 				</Info>
 
 				{
@@ -398,6 +398,10 @@ const Flex = styled.div`
 	min-height: calc(100vh - 7rem);
 	margin-bottom: 3rem;
 
+	@media(max-width: 950px){
+		margin-top: 3rem;
+		flex-direction: column;
+	}	
 `
 
 const CardStyled = styled.div`
@@ -430,6 +434,31 @@ const CardStyled = styled.div`
 		font-weight: bold;
 	}
 
+	@media(max-width: 950px){ 
+		width: 100%;
+		height: 385px;
+
+		img{
+			width: 100%;
+			height: 300px;
+		}
+	}	
+
+	@media(max-width: 700px){ 
+		height: 300px;
+
+		img{
+			height: 215px;
+		}
+	}
+
+	@media(max-width: 450px){ 
+		height: 200px;
+
+		img{
+			height: 120px;
+		}
+	}
 `
 
 const InputFile = styled.div`
@@ -457,6 +486,9 @@ const InputFile = styled.div`
 		bottom: 0;
 	}
 
+	@media(max-width: 450px){ 
+		bottom: 100px;
+	}
 `
 
 const Characteristics = styled.form`
@@ -469,6 +501,7 @@ const Characteristics = styled.form`
 		font-size: 2rem;
 		font-weight: 400;
 		margin-bottom: 1rem;
+		text-align: center;
 	}
 	
 	min-height: 484px;
@@ -477,6 +510,10 @@ const Characteristics = styled.form`
 	flex-direction: column;
 	justify-content: space-between;
 
+	@media(max-width: 950px){ 
+		margin-top: 2rem;
+		width: 100%;
+	}	
 `
 
 const Info = styled.div`
@@ -485,20 +522,36 @@ const Info = styled.div`
 	align-items: center;
 	justify-content: space-between;
 	width: 320px;
-
+	
 	.error{
 		border-color: #ff7777;
 	}
-
+	
 	.valid{
 		border-color: #39bb39;
 	}
+	
+	@media(max-width: 950px){ 
+		width: 100%;
+		
+		p{
+			width: 250px;
 
+		}
+	}	
 `
 
 const TempContainer = styled.div`
 
 	margin-top: 1rem;
+
+	@media(max-width: 950px){ 
+		width	: 100%;
+
+		input{
+			width: 100%;
+		}
+	}	
 `
 
 const InputName = styled(Input)`
@@ -509,11 +562,21 @@ const InputName = styled(Input)`
 	border-width: 1px;
 	margin-left: 1rem;
 
+	@media(max-width: 950px){ 
+		width	: 100%;
+		padding: 0.7rem;
+		margin-left: 0rem;
+	}	
 `
 
 const InputStyled = styled(InputName)`
 
 	width: 70px;
+
+	@media(max-width: 950px){ 
+		margin-left: 0;
+		width: auto;
+	}
 `
 
 const  MsgErrorFile = styled.p`
@@ -523,6 +586,10 @@ const  MsgErrorFile = styled.p`
 	position: absolute;
 	bottom: -30px;
 	left: 0;
+
+	@media(max-width: 450px){ 
+		bottom: -50px;
+	}
 `
 
 const MsgError = styled.p`
@@ -532,6 +599,9 @@ const MsgError = styled.p`
 	font-size: 0.85rem;
 	width: 320px;
 	
+	@media(max-width: 950px){ 
+		width: 100%;
+	}
 `
 
 const MsgErrorTemps = styled(MsgError)`
@@ -548,16 +618,22 @@ const MsgSendStatus = styled.span`
 	bottom: 0;
 `
 
-const MsgLoading = styled(MsgSendStatus)`
-	
-`
+const MsgLoading = styled(MsgSendStatus)``
 
 const MsgSuccess = styled(MsgSendStatus)`
-
 	color: #39bb39;
 `
 
 const MsgSendErr = styled(MsgSendStatus)`
-
 	color: #ff7777;
+`
+
+const RangeContainer = styled.div`
+
+	@media(max-width: 950px){ 
+		width: 100%;
+		display: grid;
+		gap: 2rem;
+		grid-template-columns: minMax(70px, 1fr) minMax(70px, 1fr);
+	}
 `

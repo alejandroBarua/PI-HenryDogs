@@ -46,4 +46,5 @@ export const Input = styled.input.attrs({ type: 'text' })`
 		color: #afafaf;
 	}
 	
+
 `

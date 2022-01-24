@@ -95,7 +95,10 @@ const Flex = styled.div`
 
 	display: flex;
 	align-items: center;
-	width: 100%;
+	
+	@media(max-width: 860px){
+		width: 100%;
+	}	
 
 `
 
@@ -113,15 +116,15 @@ const FilterStyled = styled.div`
 `
 
 const OptLeft = styled.div`
-	width: 100%;
 	display: flex;
 	align-items: center;
-
+	
 	span{
 		margin-left: 2rem;
 	}
-
+	
 	@media(max-width: 860px){
+		width: 100%;
 		flex-direction: column;
 		align-items: flex-start;
 
