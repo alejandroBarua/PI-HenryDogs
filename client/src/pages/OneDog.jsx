@@ -78,11 +78,15 @@ const Flex = styled.div`
 	align-items: center;
 	justify-content: center;
 	gap: 3rem;
-	min-height: calc(100vh - 7rem);
+	min-height: calc(100vh - 9rem);
 	margin-bottom: 3rem;
 
-`
+	@media(max-width: 970px){
+		margin-top: 3rem;
+		flex-direction: column;
+	}	
 
+`
 
 const CardStyled = styled.div`
 
@@ -108,11 +112,35 @@ const CardStyled = styled.div`
 		font-weight: bold;
 	}
 
+	@media(max-width: 970px){ 
+		width: 100%;
+		height: 485px;
+
+		img{
+			width: 100%;
+			object-position: top;
+			height: 400px;
+		}
+	}	
+
+	@media(max-width: 680px){ 
+		height: 385px;
+		
+		img{
+			height: 300px;
+		}
+	}	
+
 `
 
 const Characteristics = styled.div`
 
 	font-size: 18px;
+	height: 420px;
+	width: 400px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 
 	h2{
 		color: #BBBBBB;
@@ -120,12 +148,16 @@ const Characteristics = styled.div`
 		font-weight: 400;
 		margin-bottom: 1rem;
 	}
+
+	@media(max-width: 970px){ 
+		width: 100%;
+		height: auto;
+
+		h2{
+			text-align: center;
+		}
+	}	
 	
-	height: 420px;
-	width: 400px;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
 
 `
 
@@ -143,6 +175,19 @@ const Info = styled.div`
 		margin-left: 1rem;
 		width: 150px;
 	}
+
+	@media(max-width: 970px){ 
+		width: 100%;
+		background-color: #e9e9e9;
+		padding: 0.5rem 0.5rem;
+		margin: 0.2rem 0rem;
+		border-radius: 5px;
+
+		& > div {
+			background-color: white;
+			border: solid 1px #dbdbdb;
+		}
+	}	
 `
 
 const TempContainer = styled.div`

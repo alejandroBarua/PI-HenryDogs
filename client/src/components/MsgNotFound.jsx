@@ -48,4 +48,17 @@ const NotFoundStyled = styled.div`
 		margin-bottom: 1.5rem;
 	}
 
+	@media(max-width: 600px){
+
+		img{
+			width: 300px;
+		}
+		p{
+			font-size: 2rem;
+		}
+		span{
+			font-size: 1rem;
+		}
+	}	
+
 `

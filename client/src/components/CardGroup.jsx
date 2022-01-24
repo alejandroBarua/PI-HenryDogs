@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import defaultPhoto from '../assets/images/defaultImage.png';
 import loadingImg from '../assets/loading.gif';
 
-import { NotFound } from './index';
+import { MsgNotFound } from './index';
 
 
 const Card = ({id, name, weight, temps, img}) => {
@@ -68,7 +68,7 @@ const CardGroup = () => {
 			{
 				!loading && !dogs.length && 
 					<NotFoundContainer>
-						<NotFound msg='No matches found'/>
+						<MsgNotFound msg='No matches found for a dog.'/>
 					</NotFoundContainer>
 			}
 		</Flex>
@@ -88,17 +88,14 @@ const Flex = styled.div`
 	margin-top: 2rem;
 
 	@media(max-width: 919px){
-
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 	}	
 
 	@media(max-width: 720px){
-
 		display: grid;
 		grid-template-columns: 1fr;
 	}	
-
 	
 `
 
@@ -132,12 +129,9 @@ const CardStyled = styled.div`
 
 		img{
 			width: 100%;
-			object-position: 20% 10%;
+			object-position: top;
 		}
 	}	
-	
-
-	
 `
 
 const ImageContainer = styled.div`
@@ -164,10 +158,8 @@ const CardTemps = styled.div`
 	transition: opacity 0.300s;
 	
 	@media(max-width: 919px){
-
 		padding: 2rem;
 	}	
-
 `
 
 const Loading = styled.img`
@@ -177,9 +169,16 @@ const Loading = styled.img`
 	align-self: center;
 	width: 50px;
 	height: 50px;
+
+	@media(max-width: 950px){
+		position: absolute;
+		left: 50%;
+		top: 300px;
+	}	
 `
 
 const NotFoundContainer = styled.div`
 
-	position: relative;
+	position: absolute;
+	width: 100%;
 `

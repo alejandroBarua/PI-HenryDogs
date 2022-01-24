@@ -119,6 +119,9 @@ const Searched = styled.div`
 		color: #5c5c5c;
 	}
 
+	@media(max-width: 860px){
+		position: relative;
+	}	
 `
 
 const SearchContainer = styled.div`

@@ -170,6 +170,10 @@ const SelectStyled = styled.div`
 		margin-left: 0rem;
 		width: 100%;
 	  padding: 0.20rem 0.4rem;
+
+		select{
+			width: 100%;
+		}
 	}	
 
 `

@@ -14,7 +14,7 @@ import {
 import { sortDogs, filterByTemps } from '../../helpers/filterFunc';
 import { paginate } from '../../helpers/pagination';
 
-import { dogsList } from "../../data";
+// import { dogsList } from "../../data";
 
 const initialState = {
 	dogs: [],
@@ -35,7 +35,7 @@ const rootReducer = (state = initialState, {type, payload}) => {
 
 		case GET_DOGS:
 
-			payload = sortDogs(state.optOrder, dogsList);
+			payload = sortDogs(state.optOrder, payload);
 			payload = filterByTemps(state.filterTemps, payload);
 			const total = payload.length;
 			payload = paginate(payload, state.page, 8);

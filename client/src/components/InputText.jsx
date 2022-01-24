@@ -182,10 +182,9 @@ const Icon = styled.img`
 	}
 
 	@media(max-width: 860px){
-		height: 44px;
+		height: 43px;
 		width: 44px;
 		padding: 0.8rem;
-
 	}	
 
 `
@@ -220,6 +219,15 @@ const ResultsContainer = styled.div`
 		font-size: 0.8rem;
 		padding: 0.3rem 1rem;
 	}
+
+	@media(max-width: 860px){
+		width: 100%;
+		top: 42px;
+
+		p{
+			padding: 0.3rem 1rem;
+		}
+	}	
 
 `
 

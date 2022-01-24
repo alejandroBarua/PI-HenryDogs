@@ -7,7 +7,7 @@ import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyles from "./styles/Global";
 import { Container } from './styles';
 
-import { Header, Footer, NotFound } from './components';
+import { Header, Footer } from './components';
 
 import { 
   Home,
@@ -15,6 +15,7 @@ import {
   OneDog,
   CreateDog,
   About,
+  NotFound,
 
 } from './pages';
 
@@ -52,13 +53,7 @@ const App = () => {
               <Route path="/dogs/:idDog" element={<OneDog />} />
               <Route path="/create" element={<CreateDog />} />
               <Route path="/about" element={<About />} />
-              <Route path="*" element={
-                  <NotFound 
-                    msg = 'Page not Found'
-                    code='404'
-                    redirect='/'
-                    textBtn='Back home' />
-              } />
+              <Route path="*" element={<NotFound/>} />
             
           </Routes>
           </Main>

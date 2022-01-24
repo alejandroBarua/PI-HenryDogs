@@ -94,4 +94,13 @@ const ContactContainer = styled.div`
 	align-self: flex-end;
 	position: absolute;
 	bottom: 2rem;
+
+	@media(max-width: 550px){
+		width: 50px;
+
+		img{
+			margin-top: 1rem;
+		}
+
+	}
 `

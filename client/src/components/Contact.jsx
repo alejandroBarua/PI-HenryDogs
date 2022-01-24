@@ -57,12 +57,5 @@ const IconGroup = styled.div`
 		opacity: 0.7;
 	}
 
-	@media(max-width: 550px){
-		width: 50px;
 
-		img{
-			margin-top: 1rem;
-		}
-
-	}
 `
