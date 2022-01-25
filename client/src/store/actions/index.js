@@ -8,6 +8,8 @@ export const SET_OPT_ORDER = 'SET_OPT_ORDER';
 export const SET_CONNECT = 'SET_CONNECT';
 export const SET_SEARCH_NAME = 'SET_SEARCH_NAME';
 export const SET_PAGE = 'SET_PAGE';
+export const SERVER_ERROR = 'SERVER_ERROR';
+export const GET_ONEDOG = 'GET_ONEDOG';
 
 
 export const getDogs = () => (dispatch, getState) => {
@@ -21,10 +23,29 @@ export const getDogs = () => (dispatch, getState) => {
                 payload: data
             })
           })
-          .catch(() => {
+          .catch((err) => {
+            console.log(err);
             dispatch({
-                type: GET_DOGS,
-                payload: []
+                type: SERVER_ERROR,
+                payload: err
+            })
+          })
+}
+
+export const getOneDog = (id) => (dispatch) => {
+
+	return axios.get(`http://localhost:8081/api/dogs/${id}`)
+          .then(({data}) => {
+            dispatch({
+                type: GET_ONEDOG,
+                payload: data
+            })
+          })
+          .catch((err) => {
+            console.log(err);
+            dispatch({
+                type: SERVER_ERROR,
+                payload: err
             })
           })
 }

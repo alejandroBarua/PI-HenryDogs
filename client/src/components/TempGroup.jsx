@@ -29,7 +29,8 @@ const TempGroup = ({ temps, btnRemove, handlerOnPressItem }) => {
 						key={index} 
 						name={el}
 						btnRemove={btnRemove}
-						handlerOnPress={handlerOnPressItem} />)
+						handlerOnPress={handlerOnPressItem}
+						className="tempItem" />)
 				)
 			}
 		</Flex>

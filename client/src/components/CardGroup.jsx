@@ -4,9 +4,8 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
 import defaultPhoto from '../assets/images/defaultImage.png';
-import loadingImg from '../assets/loading.gif';
 
-import { MsgNotFound } from './index';
+import { MsgNotFound, Loading } from './index';
 
 
 const Card = ({id, name, weight, temps, img}) => {
@@ -45,13 +44,12 @@ const Card = ({id, name, weight, temps, img}) => {
 
 const CardGroup = () => {
 	
-	const {dogs, loading} = useSelector(state => state);
-	
+	const {dogs, loading, serverError} = useSelector(state => state);
 	
 	return (
 		<Flex>
 			{
-				loading && <Loading src={loadingImg} alt="" />
+				loading && <Loading />
 			}
 			{
 				!loading && dogs.map(({id, name, weight, temps, imgUrl}) => (
@@ -66,9 +64,13 @@ const CardGroup = () => {
 				))
 			}
 			{
-				!loading && !dogs.length && 
+				(!loading && !dogs.length) && 
 					<NotFoundContainer>
-						<MsgNotFound msg='No matches found for a dog.'/>
+						<MsgNotFound 
+							msg={serverError ? serverError.message : 'No matches found for a dog.'}
+							code={serverError ? serverError.code : ''}
+							redirect='/'
+							textBtn={serverError ? 'Back home' : null}/>
 					</NotFoundContainer>
 			}
 		</Flex>
@@ -135,7 +137,6 @@ const CardStyled = styled.div`
 `
 
 const ImageContainer = styled.div`
-
 	position: relative;
 `
 
@@ -162,23 +163,7 @@ const CardTemps = styled.div`
 	}	
 `
 
-const Loading = styled.img`
-
-	position: relative;
-	top: -100px;
-	align-self: center;
-	width: 50px;
-	height: 50px;
-
-	@media(max-width: 950px){
-		position: absolute;
-		left: 50%;
-		top: 300px;
-	}	
-`
-
 const NotFoundContainer = styled.div`
-
 	position: absolute;
 	width: 100%;
 `

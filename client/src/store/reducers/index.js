@@ -7,7 +7,9 @@ import {
 	SET_OPT_ORDER,
 	SET_CONNECT,
 	SET_SEARCH_NAME,
-	SET_PAGE
+	SET_PAGE,
+	SERVER_ERROR,
+	GET_ONEDOG
 
 } from '../actions';
 
@@ -25,8 +27,9 @@ const initialState = {
 	searchName: '',
 	total: 0,
 	page: 1,
-	loading: true
-
+	loading: true,
+	serverError: null,
+	oneDog: {}
 }
 
 const rootReducer = (state = initialState, {type, payload}) => {
@@ -44,7 +47,8 @@ const rootReducer = (state = initialState, {type, payload}) => {
 				...state,
 				dogs: payload,
 				total,
-				loading: false
+				loading: false,
+				serverError: null
 			}
 		case GET_TEMPS:
 
@@ -108,6 +112,22 @@ const rootReducer = (state = initialState, {type, payload}) => {
 				...state,
 				page: payload,
 				loading: true
+			}
+
+		case SERVER_ERROR:
+
+			return {
+				...state,
+				serverError: payload,
+				loading: false
+			}
+
+		case GET_ONEDOG:
+
+			return {
+				...state,
+				oneDog: payload,
+				loading: false
 			}
 		
 		default:

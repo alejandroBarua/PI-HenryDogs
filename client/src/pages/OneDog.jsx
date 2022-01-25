@@ -1,76 +1,88 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from "react-router-dom";
-import axios from 'axios';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { getOneDog } from '../store/actions';
 
 import styled from 'styled-components';
 
+import { TempGroup, MsgNotFound, Loading  } from '../components';
 import defaultPhoto from '../assets/images/defaultImage.png';
-import { TempGroup } from '../components/index';
 
 
 const OneDog = () => {
 
+	const { oneDog: dog, serverError: error, loading } = useSelector(state => state);
+
+	const dispatch = useDispatch();
   const { idDog } = useParams();
-	const [dog, setDog] = useState({
-		name: '',
-		weight: '',
-		height: '',
-		life_span: '',
-		imgUrl: '',
-		temps: []
-	})
-
-
-	useEffect(() => {
-
-		axios.get(`http://localhost:8081/api/dogs/${idDog}`)
-			.then(({data}) => setDog(data))
-			.catch(err => console.log(err))
-
+	
+	React.useEffect(() => {
+		
+		dispatch(getOneDog(idDog));
 	}, []);
+
 
 	return (
 		<Flex>
-			<CardStyled>
-				<img src={dog.imgUrl || defaultPhoto} alt={dog.name} />
-				<h3>{dog.name}</h3>
-			</CardStyled>
-			<Characteristics>
-				<h2>Dog characteristics</h2>
-				<Info>
-					<p>Weight:</p>
-					<div>
-						<span>{dog.weight.includes('NaN') ? 
-							dog.weight.includes('-') ? 
-								dog.weight.split('NaN').join('').split('-').join('').trim()
-								: 'No value'
-							: dog.weight}</span>
-					</div>
-				</Info>
-				<Info>
-					<p>Height:</p>
-					<div>
-						<span>{dog.height}</span>
-					</div>
-				</Info>
-				<Info>
-					<p>Life span:</p>
-					<div>
-						<span>{dog.life_span}</span>
-					</div>
-				</Info>
-				<TempContainer>
-					<p>Temperament:</p>
-					<TempGroup 
-						temps={dog.temps}
-						btnRemove={false} />
-				</TempContainer>
-			</Characteristics>
+
+			{
+				loading && <Loading />
+			}
+
+			{
+				error && <MsgNotFound 
+										msg = 'The id was not found'
+										code='400'
+										redirect='/'
+										textBtn='Back home' />
+			}
+			{
+				(error || !Object.values(dog).length) ? '' : <>
+						<CardStyled>
+							<img src={dog.imgUrl || defaultPhoto} alt={dog.name} />
+							<h3>{dog.name}</h3>
+						</CardStyled>
+						<Characteristics>
+							<h2>Dog characteristics</h2>
+							<Info>
+								<p>Weight:</p>
+								<div>
+									<span className='weight'>{dog.weight.includes('NaN') ? 
+										dog.weight.includes('-') ? 
+											dog.weight.split('NaN').join('').split('-').join('').trim()
+											: 'No value'
+										: dog.weight}</span>
+								</div>
+							</Info>
+							<Info>
+								<p>Height:</p>
+								<div>
+									<span className='height'>{dog.height}</span>
+								</div>
+							</Info>
+							<Info>
+								<p>Life span:</p>
+								<div>
+									<span className='life_span'>{dog.life_span}</span>
+								</div>
+							</Info>
+							<TempContainer>
+								<p>Temperament:</p>
+								<TempGroup 
+									temps={dog.temps}
+									btnRemove={false} />
+							</TempContainer>
+						</Characteristics>
+				</>
+			}
+
 		</Flex>
 	)
 }
 
 export default OneDog;
+
 
 const Flex = styled.div`
 
@@ -85,7 +97,6 @@ const Flex = styled.div`
 		margin-top: 3rem;
 		flex-direction: column;
 	}	
-
 `
 
 const CardStyled = styled.div`
@@ -130,7 +141,6 @@ const CardStyled = styled.div`
 			height: 300px;
 		}
 	}	
-
 `
 
 const Characteristics = styled.div`
@@ -157,8 +167,6 @@ const Characteristics = styled.div`
 			text-align: center;
 		}
 	}	
-	
-
 `
 
 const Info = styled.div`
@@ -191,6 +199,5 @@ const Info = styled.div`
 `
 
 const TempContainer = styled.div`
-
 	margin-top: 1rem;
 `

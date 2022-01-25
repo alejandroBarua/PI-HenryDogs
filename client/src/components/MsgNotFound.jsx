@@ -14,7 +14,7 @@ const NotFound = ({msg = '', code, redirect='/', textBtn}) => {
 			<p>{`Sorry... ${code ? code : ''}`}</p>
 			<span>{msg}</span>
 			{
-				code && <Link to={redirect}>
+				textBtn && <Link to={redirect}>
 									<Button text={textBtn} />
 								</Link>
 			}

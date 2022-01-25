@@ -80,14 +80,14 @@ const CreateDog = () => {
 
 	const handleOnChangeInput = (e) => {
 
-		setIsEmpty({
-			...isEmpty,
-			[e.target.name]: false,
-		})
-
 		setInput({
 			...input,
 			[e.target.name]: e.target.value,
+		})
+
+		setIsEmpty({
+			...isEmpty,
+			[e.target.name]: false,
 		})
 	}
 	
@@ -95,13 +95,13 @@ const CreateDog = () => {
 
 		if(isResult && !input.temps.includes(value)){
 
-			setIsEmpty({
-				...isEmpty,
-				temps: false,
-			})
 			setInput({
 				...input,
 				temps: [value, ...input.temps]
+			})
+			setIsEmpty({
+				...isEmpty,
+				temps: false,
 			})
 		} 
 	}
@@ -196,10 +196,8 @@ const CreateDog = () => {
 				success: true,
 				error: false
 			})
-
-			resetForm(e);
 			
-			if(imagePreview.current.src.includes(defaultPhoto)) return;
+			if(imagePreview.current.src.includes(defaultPhoto)) return resetForm(e);
 			
 			const InstFormData = new FormData();
 			InstFormData.append('image' , file);
@@ -208,6 +206,7 @@ const CreateDog = () => {
 			InstFormData , 
 			{headers : {'content-type': 'multipart/form-data'}})
 
+			resetForm(e);
 		})
 		.catch(err => {
 
@@ -230,7 +229,7 @@ const CreateDog = () => {
 
 	useEffect(() => {
 		setErrors(validateInput(input));
-
+		
 	}, [input]);
 
 
@@ -501,7 +500,6 @@ const Characteristics = styled.form`
 		font-size: 2rem;
 		font-weight: 400;
 		margin-bottom: 1rem;
-		text-align: center;
 	}
 	
 	min-height: 484px;
@@ -513,6 +511,10 @@ const Characteristics = styled.form`
 	@media(max-width: 950px){ 
 		margin-top: 2rem;
 		width: 100%;
+
+		h2{
+			text-align: center;
+		}
 	}	
 `
 

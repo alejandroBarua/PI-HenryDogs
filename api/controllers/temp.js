@@ -26,12 +26,10 @@ const getTemps = async(req = request, res = response) => {
 		await Promise.all(promises);
 		let tempsDB = await Temp.findAll({ attributes: ['name'] });
 		tempsDB = tempsDB.map(el => el.name);
-
 	
 		res.status(200).json(tempsDB);
 
 	} catch (error) {
-		
 		console.log(error)
 		return res.status(500).json({ error: "Server error." });
 	}
