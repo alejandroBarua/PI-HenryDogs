@@ -25,7 +25,7 @@ const getDogsAll = async(req = request, res = response) => {
 			dataAPI = getDogModelApi(data);
 		}
 
-	
+		
 		if(connect === 'dataAll' || connect === 'dataDB'){
 
 			const query = {

@@ -31,7 +31,6 @@ const getDogModelDB = (dataDB = []) => {
 
 		const values = {
 			...dataValues,
-			imgUrl: `http://localhost:${process.env.PORT}/api/img/${dataValues.id}`,
 			temps: dataValues.Temps.map(temp => temp.name)
 		}
 	

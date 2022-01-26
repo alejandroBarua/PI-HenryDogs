@@ -1,37 +1,9 @@
 const { request, response } = require('express');
-const path = require('path');
 
 const { Dog } = require('../models');
 
-const uploadImage = require('../utils/uploadImage');
-
-
-const getImgById = async(req = request, res = response) => {
-
-	const { id } = req.params;
-
-	try {
-		
-		const dog = await Dog.findOne({ 
-			where: { id },
-			attributes: ['imgName']
-		})
-		
-		if(!dog){
-			return res.status(400).json({
-				error: 'The id is not valid.'
-			})
-		}
-
-		const pathImage = path.join(__dirname, '../uploads/', dog.imgName ? dog.imgName : 'defaultImage.png');
-		res.status(200).sendFile(pathImage)
-
-	} catch (error) {
-		console.log(error)
-		return res.status(500).json({ error: "Server error." });
-	}
-
-}
+const cloudinary = require('cloudinary').v2;
+cloudinary.config(process.env.CLOUDINARY_URL);
 
 
 const createImage = async(req = request, res = response) => {
@@ -42,21 +14,28 @@ const createImage = async(req = request, res = response) => {
 
 		const dog = await Dog.findOne({ where: { id } });
 
-		if(!dog || dog.imgName){
+		if(!dog){
 			return res.status(400).json({
 				error: 'The id is not valid.'
 			})
 		}
 
-		const imgName = await uploadImage(req.files, id);
-		const imgUrl = `http://localhost:${process.env.PORT}/api/img/${id}`;
+		if (dog.imgUrl) {
+			const nameArr = dog.image.split('/');
+			const name = nameArr[nameArr.length-1];
+			const [ public_id ] = name.split('.');
+			cloudinary.uploader.destroy(public_id);
+		}
 
-		await Dog.update({ imgName, imgUrl }, { where: { id } });
+
+		const { tempFilePath } = req.files.image;
+		const { secure_url } = await cloudinary.uploader.upload(tempFilePath);
+
+		await Dog.update({ imgUrl: secure_url }, { where: { id } });
 
 		res.status(201).json({
 			id,
-			imgName,
-			imgUrl
+			secure_url
 		})
 
 	} catch (error) {
@@ -68,6 +47,5 @@ const createImage = async(req = request, res = response) => {
 
 
 module.exports = {
-	getImgById,
 	createImage
 }

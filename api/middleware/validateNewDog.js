@@ -60,7 +60,6 @@ const validateDogNotExist = async(req = request, res = response, next) => {
 const validateImage = async(req = request, res = response, next) => {
 
 	if(!req.files) return next();
-	if(!req.files.image) return next();
 
 	if (Object.keys(req.files).length > 1) {
     return res.status(400).json({ 

@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const morgan = require('morgan');
+const path = require('path');
 
 const db = require('./models');
 
@@ -35,13 +37,14 @@ class Server {
 
 	middlewares(){
 		this.app.use(cors());
+		this.app.use(morgan('dev'));
 		this.app.use(express.json());
-		this.app.use(express.static('public'));
+		this.app.use(express.static(path.join(__dirname, 'public')));
 	}
 
 	routes(){
 
-		this.app.use(this.paths.temp, require('./routes/temp'));
+		this.app.use(this.paths.temp, require('./routes/temperament'));
 		this.app.use(this.paths.dog, require('./routes/dog'));
 		this.app.use(this.paths.dogs, require('./routes/dogs'));
 		this.app.use(this.paths.img, require('./routes/img'));
