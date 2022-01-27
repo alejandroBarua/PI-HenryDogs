@@ -49,7 +49,7 @@ const validateDogNotExist = async(req = request, res = response, next) => {
 		
 	} catch (error) {
 
-		console.log(err)
+		console.log(error)
 		return res.status(500).json({ error: "Server error." });
 	}
 
