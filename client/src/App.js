@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
-import { getTemps } from './store/actions';
+import { getTemps, getDogNames } from './store/actions';
 
 import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyles from "./styles/Global";
@@ -19,14 +19,15 @@ import {
 
 } from './pages';
 
+
+
 const theme = {
   colorPrimary: '#FFAD62',
   colorMedium: '#FFC499',
   colorLight: '#FFEFD8'
 }
 
-/* 919px breakpoint: cards agrandar de a dos */
-/* 860px breakpoint: header, filtros */
+
 
 const App = () => {
 
@@ -37,6 +38,7 @@ const App = () => {
   	useEffect(() => {
 		
       dispatch(getTemps());
+      dispatch(getDogNames());
       
     }, [])
 

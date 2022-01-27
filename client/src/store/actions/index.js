@@ -10,6 +10,7 @@ export const SET_SEARCH_NAME = 'SET_SEARCH_NAME';
 export const SET_PAGE = 'SET_PAGE';
 export const SERVER_ERROR = 'SERVER_ERROR';
 export const GET_ONEDOG = 'GET_ONEDOG';
+export const GET_DOG_NAMES = 'GET_DOG_NAMES';
 
 
 export const getDogs = () => (dispatch, getState) => {
@@ -62,6 +63,24 @@ export const getTemps = () => (dispatch) => {
           .catch(() => {
             dispatch({
                 type: GET_TEMPS,
+                payload: []
+            })
+          })
+}
+
+export const getDogNames = () => (dispatch) => {
+
+	return axios.get(`http://localhost:8081/api/dogs`)
+          .then(({data}) => {
+            dispatch({
+                type: GET_DOG_NAMES,
+                payload: data
+            })
+          })
+          .catch((err) => {
+            console.log(err);
+            dispatch({
+                type: GET_DOG_NAMES,
                 payload: []
             })
           })

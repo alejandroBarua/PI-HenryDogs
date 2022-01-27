@@ -22,13 +22,17 @@ const Header = () => {
   const navigate = useNavigate();
 
 	const dispatch = useDispatch();
-	const { dogs, searchName } = useSelector(state => state);
+	const { dogNames, searchName } = useSelector(state => state);
 
 	const handlePressDogName = (dogName) => {
 		dispatch(setSearchName(dogName));
     navigate("/dogs");
 	}
-	const handleDeleteSearchValue = () => dispatch(setSearchName(''));
+	
+	const handleDeleteSearchValue = () =>{
+		dispatch(setSearchName(''));
+    navigate("/dogs");
+	}
 
 
 	return (
@@ -43,7 +47,7 @@ const Header = () => {
 					<InputText 
 						icon={iconLupa}
 						text={'Search dog by breed'}
-						results={dogs.map(el => el.name)}
+						results={dogNames}
 						handlePress={handlePressDogName} />
 						{
 							searchName && <Searched onClick={handleDeleteSearchValue}>

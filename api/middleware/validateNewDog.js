@@ -45,7 +45,7 @@ const validateDogNotExist = async(req = request, res = response, next) => {
 	try {
 
 		const dog = await Dog.findOne({ where: { name }});
-		if(dog)return res.status(400).json({ error: 'The name is not available.' });
+		if(dog)return res.status(400).json({ error: 'The name already exists in the database.' });
 		
 	} catch (error) {
 

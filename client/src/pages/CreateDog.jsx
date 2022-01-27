@@ -63,6 +63,7 @@ const CreateDog = () => {
 	const [input, setInput] = useState(initialInput);
 	const [errors, setErrors] = useState(initialErrors);
 	const [isEmpty, setIsEmpty] = useState(initialIsEmpty);
+	const [msgError, setMsgError] = useState('');
 
 	const validateEmpty = () => {
 
@@ -211,6 +212,7 @@ const CreateDog = () => {
 		.catch(err => {
 
 			console.log(err);
+			setMsgError(err.response.data.error)
 
 			setSendStatus({
 				loading: false,
@@ -223,7 +225,8 @@ const CreateDog = () => {
 			setTimeout(() => {
 
 				setSendStatus(initialSendStatus);
-			}, 5000);
+				setMsgError('');
+			}, 6000);
 		})
 	}
 
@@ -369,7 +372,10 @@ const CreateDog = () => {
 					width={150} />
 
 					{
-					 sendStatus.error &&	<MsgSendErr>Please try again to create.</MsgSendErr>
+					 sendStatus.error && <MsgErrorContainer>
+						 <span>Please try again to create.</span>
+						 <span className='errorDescription'>{ msgError }</span>
+					 </MsgErrorContainer>	
 					}
 
 					{
@@ -626,8 +632,24 @@ const MsgSuccess = styled(MsgSendStatus)`
 	color: #39bb39;
 `
 
-const MsgSendErr = styled(MsgSendStatus)`
-	color: #ff7777;
+const MsgErrorContainer = styled.div`
+
+	position: absolute;
+	left: 180px;
+	bottom: 0;
+	width: 70%;
+	
+	span{
+		color: #ff7777;
+		display: block;
+		font-weight: 700;
+	}
+
+	span.errorDescription{
+		font-size: 0.8rem;
+		font-weight: 400;
+
+	}
 `
 
 const RangeContainer = styled.div`

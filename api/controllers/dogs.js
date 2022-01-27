@@ -9,7 +9,7 @@ const { getDogModelApi, getDogModelDB } = require('../utils/getDogModel');
 
 const getDogsAll = async(req = request, res = response) => {
 
-	const { name, connect } = req.query;
+	const { name = '', connect = 'dataAll' } = req.query;
 
 	try {
 

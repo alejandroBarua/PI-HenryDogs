@@ -9,7 +9,8 @@ import {
 	SET_SEARCH_NAME,
 	SET_PAGE,
 	SERVER_ERROR,
-	GET_ONEDOG
+	GET_ONEDOG,
+	GET_DOG_NAMES
 
 } from '../actions';
 
@@ -21,6 +22,7 @@ import { paginate } from '../../helpers/pagination';
 const initialState = {
 	dogs: [],
 	temps: [],
+	dogNames: [],
 	filterTemps: [],
 	optOrder: 1,
 	connect: 'dataAll',
@@ -29,7 +31,8 @@ const initialState = {
 	page: 1,
 	loading: true,
 	serverError: null,
-	oneDog: {}
+	oneDog: {},
+
 }
 
 const rootReducer = (state = initialState, {type, payload}) => {
@@ -55,6 +58,13 @@ const rootReducer = (state = initialState, {type, payload}) => {
 			return {
 				...state,
 				temps: payload
+			}
+		
+		case GET_DOG_NAMES:
+
+			return {
+				...state,
+				dogNames: payload.map(el => el.name)
 			}
 
 		case ADD_FILTER_TEMP:
@@ -119,7 +129,8 @@ const rootReducer = (state = initialState, {type, payload}) => {
 			return {
 				...state,
 				serverError: payload,
-				loading: false
+				loading: false,
+				dogs: []
 			}
 
 		case GET_ONEDOG:

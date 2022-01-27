@@ -20,7 +20,7 @@ const server = app.listen(port, () => {
 	console.log(`App listening at http://localhost:${port}`)
 })
 
-dbConnection({ force: true });
+dbConnection({ force: false });
 
 
 
