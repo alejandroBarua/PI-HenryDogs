@@ -21,7 +21,7 @@ const createImage = async(req = request, res = response) => {
 		}
 
 		if (dog.imgUrl) {
-			const nameArr = dog.image.split('/');
+			const nameArr = dog.imgUrl.split('/');
 			const name = nameArr[nameArr.length-1];
 			const [ public_id ] = name.split('.');
 			cloudinary.uploader.destroy(public_id);
@@ -42,7 +42,6 @@ const createImage = async(req = request, res = response) => {
 		console.log(error)
 		return res.status(500).json({ error: "Server error." });
 	}
-
 }
 
 

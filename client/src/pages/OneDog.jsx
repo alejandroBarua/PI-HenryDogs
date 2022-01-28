@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getOneDog } from '../store/actions';
 
 import { TempGroup, MsgNotFound, Loading  } from '../components';
 import defaultPhoto from '../assets/images/defaultImage.png';
+import { isIdDB } from '../helpers/validate';
 
 
 const OneDog = () => {
 
+  const navigate = useNavigate();
+
 	const { oneDog: dog, serverError: error, loading } = useSelector(state => state);
+	const [msgDelete, setMsgDelete] = useState('.');
 
 	const dispatch = useDispatch();
   const { idDog } = useParams();
@@ -20,6 +25,27 @@ const OneDog = () => {
 		
 		dispatch(getOneDog(idDog));
 	}, []);
+
+
+	const handleOnDelete = () => {
+
+		const result = window.confirm('sure you want to remove the dog?');
+
+		if(result){
+			axios.delete(`${process.env.REACT_APP_BACKEND_URL}/api/dog/${idDog}`)
+				.then(res => setMsgDelete('The dog was deleted correctly.'))
+				.catch(err => {
+					console.log(err);
+					setMsgDelete('The dog did not delete correctly.')
+				})
+				.finally(res => {
+					setTimeout(() => {
+						navigate("/dogs");
+					}, 2500);
+				})
+		}
+
+	}
 
 
 	return (
@@ -41,6 +67,18 @@ const OneDog = () => {
 						<CardStyled>
 							<img src={dog.imgUrl || defaultPhoto} alt={dog.name} />
 							<h3>{dog.name}</h3>
+							<MsgDeleteContainer>
+								{
+									msgDelete && <span>{msgDelete}</span>
+								}
+								{
+									isIdDB(idDog) && (
+										<BtnDelete onClick={handleOnDelete}>
+												Delete
+										</BtnDelete>)
+								}
+							</MsgDeleteContainer>
+							
 						</CardStyled>
 						<Characteristics>
 							<h2>Dog characteristics</h2>
@@ -100,6 +138,7 @@ const Flex = styled.div`
 
 const CardStyled = styled.div`
 
+	position: relative;
 	min-width: 260px;
 	height: 484px;
 	padding: 1rem;
@@ -140,6 +179,28 @@ const CardStyled = styled.div`
 			height: 300px;
 		}
 	}	
+`
+
+const MsgDeleteContainer = styled.div`
+
+	position: absolute;
+	left: -1px;
+	right: -1px;
+	bottom: -40px;
+	display: flex;
+	justify-content: space-between;
+`
+
+const BtnDelete = styled.div`
+	background-color: #ff7373;
+	color: white;
+	padding: 0.2rem 0.7rem;
+	border-radius: 5px;
+
+	&:hover{
+		cursor: pointer;
+		background-color: #ff5b5b;
+	}
 `
 
 const Characteristics = styled.div`

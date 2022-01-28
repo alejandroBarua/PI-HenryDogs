@@ -2,6 +2,8 @@ const { request, response } = require('express');
 
 const { Dog, Temp } = require('../models');
 
+const cloudinary = require('cloudinary').v2;
+cloudinary.config(process.env.CLOUDINARY_URL);
 
 const createDog = async(req = request, res = response) => {
 
@@ -38,8 +40,39 @@ const createDog = async(req = request, res = response) => {
 	}
 }
 
+const deleteDog = async(req = request, res = response) => {
+
+	const { id } = req.params;
+
+	try {
+
+	 	const dogDB = await Dog.findOne({ where: { id }});
+		
+	 	if(!dogDB) {
+			return res.status(400).json({ error: 'The id is not valid.' })
+	 	}
+
+		await Dog.destroy({ where: { id }});
+
+		if (dogDB.imgUrl) {
+			const nameArr = dogDB.imgUrl.split('/');
+			const name = nameArr[nameArr.length-1];
+			const [ public_id ] = name.split('.');
+			cloudinary.uploader.destroy(public_id);
+		}
+
+  	res.status(200).json(dogDB)
+
+	} catch (error) {
+		console.log(error)
+		return res.status(500).json({ error: "Server error." });
+	}
+
+}
+
 
 module.exports = {
 	createDog,
+	deleteDog,
 
 }

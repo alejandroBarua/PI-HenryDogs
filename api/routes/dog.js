@@ -5,10 +5,11 @@ const {
 	validateTemps, 
 	validateValuesDog, 
 	validateDogNotExist,
+	validateDogId,
 	
 } = require('../middleware');
 
-const { createDog } = require('../controllers/dog');
+const { createDog, deleteDog } = require('../controllers/dog');
 
 
 router.post('/', 
@@ -16,6 +17,10 @@ router.post('/',
 	validateDogNotExist,
 	validateTemps,
 	createDog)
+
+router.delete('/:id', 
+	validateDogId,
+	deleteDog)
 
 
 module.exports = router;
