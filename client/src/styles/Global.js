@@ -9,7 +9,7 @@ const GlobalStyles = createGlobalStyle`
 		font-size: ${({fontSize = 16}) => `${fontSize}px`};
 		font-family: "Roboto", sans-serif;
 		line-height: 1.5;
-		letter-spacing: 0.7px;
+		letter-spacing: 0.2px;
 		scroll-behavior: smooth;
 	}
 
