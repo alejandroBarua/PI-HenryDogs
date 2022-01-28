@@ -2,7 +2,7 @@
   "name": "pi-dogs-main",
   "version": "1.0.0",
   "description": "henrydogs",
-  "main": "index.js",
+  "main": "./api/app.js",
   "scripts": {
     "start": "npm start --prefix ./api"
   },
