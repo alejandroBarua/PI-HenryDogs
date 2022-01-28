@@ -1,5 +1,6 @@
 const express = require('express');
 const routes = express.Router();
+const path = require('path');
 
 const paths = {
 	temperament: '/api/temperament',
@@ -12,6 +13,10 @@ routes.use(paths.temperament, require('./temperament'));
 routes.use(paths.dogs, require('./dogs'));
 routes.use(paths.dog, require('./dog'));
 routes.use(paths.img, require('./img'));
+
+routes.get('*', (req, res) => {
+  return res.sendFile(path.join(__dirname, '../../client/build/index.html'));
+});
 
 
 
