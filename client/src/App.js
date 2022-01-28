@@ -33,7 +33,7 @@ const App = () => {
 
 	const dispatch = useDispatch();
 
-	const { pathname } = useLocation();
+	let { pathname } = useLocation();
 
   	useEffect(() => {
 		

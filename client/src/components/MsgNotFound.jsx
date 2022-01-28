@@ -34,7 +34,7 @@ const NotFoundStyled = styled.div`
 	margin-top: 3rem;
 
 	img{
-		width: 400px;
+		width: 350px;
 	}
 
 	p{
@@ -51,7 +51,7 @@ const NotFoundStyled = styled.div`
 	@media(max-width: 600px){
 
 		img{
-			width: 300px;
+			width: 250px;
 		}
 		p{
 			font-size: 2rem;

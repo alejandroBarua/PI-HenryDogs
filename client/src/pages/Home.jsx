@@ -48,7 +48,13 @@ const Banner = styled.img`
 	@media(max-width: 970px){
 		position: absolute;
 		bottom: 0;
-		width: 60%;
+		width: 300px;
+	}
+
+	@media(max-width: 860px){
+		position: absolute;
+		bottom: 0;
+		width: 250px;
 	}
 `
 
@@ -83,6 +89,7 @@ const Message = styled.div`
 		z-index: 100;
 		width: 100%;
 		h1{
+			text-align: center;
 			font-size: 3vh;
 		}
 	}

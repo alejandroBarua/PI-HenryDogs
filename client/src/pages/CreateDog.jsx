@@ -485,8 +485,8 @@ const InputFile = styled.div`
 		justify-content: center;
 		align-items: center;
 		position: absolute;
-		left: -8px;
-		right: -8px;
+		left: -18px;
+		right: -18px;
 		top: 0;
 		bottom: 0;
 	}
