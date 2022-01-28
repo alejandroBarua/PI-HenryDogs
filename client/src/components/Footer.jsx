@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { Container } from '../styles';
 
+import { Contact } from './index';
 
 import logoHenry from '../assets/logo-henry.png';
 import logoPuppy from '../assets/logo-puppy-light.png';
 
-import { Contact } from './index';
 
 const Footer = () => {
 	return (

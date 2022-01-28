@@ -1,15 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-
 import styled from 'styled-components';
-import { Input } from '../styles';
 
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+
+import { TempGroup, InputText, Button } from '../components/index';
+import { validateInput, validateFile } from '../helpers/validate';
 
 import defaultPhoto from '../assets/images/defaultImage.png';
 import iconAdd from '../assets/icons/icon-add.png';
-import { validateInput, validateFile } from '../helpers/validate';
-import { TempGroup, InputText, Button } from '../components/index';
 
 
 const CreateDog = () => {
@@ -189,7 +188,7 @@ const CreateDog = () => {
 
 		axios.defaults.headers.post['Content-Type'] = 'application/json';
 
-		axios.post(`http://localhost:8081/api/dog`, input)
+		axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/dog`, input)
 		.then(({data}) => {
 
 			setSendStatus({
@@ -203,7 +202,7 @@ const CreateDog = () => {
 			const InstFormData = new FormData();
 			InstFormData.append('image' , file);
 			
-			axios.post(`http://localhost:8081/api/img/${data.id}`, 
+			axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/img/${data.id}`, 
 			InstFormData , 
 			{headers : {'content-type': 'multipart/form-data'}})
 
@@ -395,7 +394,6 @@ export default CreateDog;
 
 
 const Flex = styled.div`
-
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -562,13 +560,18 @@ const TempContainer = styled.div`
 	}	
 `
 
-const InputName = styled(Input)`
+const InputName = styled.input.attrs({ type: 'text' })`
 
-	width: 220px;
-	border-width: 1px;
+	font-size: 1rem;
+	padding: 0.5rem 1rem;
+	border: solid 1px #BBBBBB;
 	border-radius: 5px;
-	border-width: 1px;
+	width: 220px;
 	margin-left: 1rem;
+
+	&::placeholder{
+		color: #afafaf;
+	}
 
 	@media(max-width: 950px){ 
 		width	: 100%;
@@ -613,7 +616,6 @@ const MsgError = styled.p`
 `
 
 const MsgErrorTemps = styled(MsgError)`
-
 	text-align: start;	
 	position: relative;
 	top: -1rem;
@@ -648,7 +650,6 @@ const MsgErrorContainer = styled.div`
 	span.errorDescription{
 		font-size: 0.8rem;
 		font-weight: 400;
-
 	}
 `
 

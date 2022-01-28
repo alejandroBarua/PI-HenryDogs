@@ -1,19 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { 
-	addFilterTemp, 
-	setOptOrder, 
-	setConnect,
-
-} from '../store/actions';
-
 import styled from 'styled-components';
-import { Input } from '../styles';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { addFilterTemp, setOptOrder, setConnect } from '../store/actions';
 
 import { InputText } from './index';
-
 import iconAdd from '../assets/icons/icon-add.png';
-
 
 
 const Filters = () => {
@@ -99,7 +91,6 @@ const Flex = styled.div`
 	@media(max-width: 860px){
 		width: 100%;
 	}	
-
 `
 
 const FilterStyled = styled.div`
@@ -203,5 +194,4 @@ const OptRight = styled.form`
 		}
 
 	}	
-
 `

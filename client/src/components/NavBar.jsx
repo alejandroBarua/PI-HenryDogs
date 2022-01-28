@@ -1,7 +1,6 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { NavLink, useLocation } from 'react-router-dom';
 
 
 const NavBar = () => {
@@ -62,11 +61,16 @@ const Item = styled.div`
 	@media(max-width: 860px){
 		margin-left: 1rem;
 	}
-	@media(max-width: 400px){
+	@media(max-width: 420px){
 		a{
 			font-size: 12.6px;
 		}
 	}	
+	@media(max-width: 377px){
+		a{
+			font-size: 10.6px;
+		}
+	}
 `
 
 const Cicle = styled.div`
@@ -79,5 +83,4 @@ const Cicle = styled.div`
 	position: absolute;
 	top: 1.8rem;
 }
-
 `

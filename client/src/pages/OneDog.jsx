@@ -1,10 +1,9 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from 'react-redux';
 import { getOneDog } from '../store/actions';
-
-import styled from 'styled-components';
 
 import { TempGroup, MsgNotFound, Loading  } from '../components';
 import defaultPhoto from '../assets/images/defaultImage.png';

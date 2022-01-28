@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-
 const Button = ({text = 'I am a Button', solid, width, onClick}) => {
 	return (
 		<ButtonStyled 

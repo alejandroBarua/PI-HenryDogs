@@ -1,8 +1,9 @@
 import React from 'react';
+import styled from 'styled-components';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { setPage } from '../store/actions';
 
-import styled from 'styled-components';
 
 const Item = ({num, page}) => {
 
@@ -102,13 +103,10 @@ export default Pagination;
 
 
 const PaginationStyled = styled.div`
-
 	position: absolute;
 	bottom: -70px;
 	left: 0;
 	right: 0;
-
-
 	margin-top: 3rem;
 `
 

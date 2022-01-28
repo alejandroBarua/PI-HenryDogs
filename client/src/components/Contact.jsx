@@ -15,9 +15,10 @@ const links = {
 	github: 'https://github.com/alejandroBarua'
 }
 
+
 const Contact = ({color = 'dark'}) => {
 	return (
-		<IconGroup>
+		<ContactStyled>
 			<a href={links.portfolio} target='_blank' rel="noreferrer">
 				<img 
 					className={color === 'dark' ? 'dark' : ''}
@@ -36,14 +37,14 @@ const Contact = ({color = 'dark'}) => {
 					src={color === 'dark' ? iconGithubDark : iconGithubLight} 
 					alt="" />
 			</a>
-		</IconGroup>
+		</ContactStyled>
 	)
 }
 
 export default Contact;
 
 
-const IconGroup = styled.div`
+const ContactStyled = styled.div`
 
 	a{
 		margin-left: 1rem;
@@ -56,6 +57,4 @@ const IconGroup = styled.div`
 	.dark{
 		opacity: 0.7;
 	}
-
-
 `

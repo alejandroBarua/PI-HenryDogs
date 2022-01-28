@@ -2,15 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from "react-router-dom";
 
-
-
+import { Contact, Button } from '../components';
 import bannerImg from '../assets/images/banner.png';
 
-import { Contact, Button } from '../components';
 
 const Home = () => {
 	return (
-		<Grid>
+		<HomeStyled>
 			<Banner src={bannerImg} alt="" />
 				<Flex>
 					<Message>
@@ -23,13 +21,13 @@ const Home = () => {
 						<Contact />
 					</ContactContainer>
 				</Flex>
-		</Grid>
+		</HomeStyled>
 	)
 }
 
 export default Home;
 
-const Grid = styled.div`
+const HomeStyled = styled.div`
 
 	display: grid;
 	grid-template-columns: 450px 1fr;
@@ -68,7 +66,6 @@ const Flex = styled.div`
 	@media(max-width: 970px){
 		margin-top: 4rem;
 	}
-
 `
 
 const Message = styled.div`
@@ -93,7 +90,6 @@ const Message = styled.div`
 			font-size: 3vh;
 		}
 	}
-
 `
 
 const ContactContainer = styled.div`

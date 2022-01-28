@@ -1,20 +1,14 @@
 import React from 'react';
-
+import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { setSearchName } from '../store/actions';
 
-import styled from 'styled-components';
-
-import { 
-	NavBar,
-	InputText,
-
-} from './index';
+import { NavBar, InputText } from './index';
 
 import logo from '../assets/logo-dark.png';
 import iconLupa from '../assets/icons/icon-lupa.png';
-
 
 
 const Header = () => {
@@ -68,7 +62,6 @@ const HeaderStyled = styled.div`
 	height: 7rem;
 
 	@media(max-width: 860px){
-
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 2rem;
@@ -133,5 +126,4 @@ const SearchContainer = styled.div`
 	@media(max-width: 860px){
 		width: 100%;
 	}	
-
 `

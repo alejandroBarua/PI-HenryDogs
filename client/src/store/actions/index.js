@@ -17,7 +17,7 @@ export const getDogs = () => (dispatch, getState) => {
 
   const { connect, searchName: name } = getState();
 
-	return axios.get(`http://localhost:8081/api/dogs?connect=${connect}&name=${name}`)
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/dogs?connect=${connect}&name=${name}`)
           .then(({data}) => {
             dispatch({
                 type: GET_DOGS,
@@ -35,7 +35,7 @@ export const getDogs = () => (dispatch, getState) => {
 
 export const getOneDog = (id) => (dispatch) => {
 
-	return axios.get(`http://localhost:8081/api/dogs/${id}`)
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/dogs/${id}`)
           .then(({data}) => {
             dispatch({
                 type: GET_ONEDOG,
@@ -53,7 +53,7 @@ export const getOneDog = (id) => (dispatch) => {
 
 export const getTemps = () => (dispatch) => {
 
-	return axios.get(`http://localhost:8081/api/temperament`)
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/temperament`)
           .then(({data}) => {
             dispatch({
                 type: GET_TEMPS,
@@ -70,7 +70,7 @@ export const getTemps = () => (dispatch) => {
 
 export const getDogNames = () => (dispatch) => {
 
-	return axios.get(`http://localhost:8081/api/dogs`)
+	return axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/dogs`)
           .then(({data}) => {
             dispatch({
                 type: GET_DOG_NAMES,

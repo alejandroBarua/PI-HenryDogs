@@ -96,7 +96,7 @@ const InputText = ({ icon, text, width = 200, results = [], handlePress }) => {
 
 
 	return (
-		<InputContainer  >     
+		<InputStyled>     
 			<Input 
 				placeholder={text} 
 				width={width}
@@ -126,14 +126,14 @@ const InputText = ({ icon, text, width = 200, results = [], handlePress }) => {
 				</ResultsContainer> : ''
 			}
 			
-		</InputContainer>
+		</InputStyled>
 	)
 }
 
 export default InputText;
 
 
-const InputContainer = styled.div`
+const InputStyled = styled.div`
 	position: relative;
 	display: flex;
 	align-items: center;
