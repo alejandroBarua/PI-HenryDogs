@@ -15,7 +15,7 @@ routes.use(paths.dog, require('./dog'));
 routes.use(paths.img, require('./img'));
 
 routes.get('*', (req, res) => {
-  return res.sendFile(path.join(__dirname, '../public/index.html'));
+  return res.sendFile(path.join(__dirname, '../../client/build/index.html'));
 });
 
 
