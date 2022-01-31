@@ -23,7 +23,6 @@ const server = app.listen(port, () => {
 dbConnection({ force: false });
 
 
-
 module.exports = {
 	app,
 	server

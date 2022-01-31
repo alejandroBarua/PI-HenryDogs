@@ -12,11 +12,10 @@ router.use(fileUpload({
 	tempFileDir: '/tmp/'
 }))
 
-
 router.post('/:id', 
-validateDogId, 
-validateImage,
-createImage)
+	validateDogId, 
+	validateImage,
+	createImage)
 
 
 module.exports = router;

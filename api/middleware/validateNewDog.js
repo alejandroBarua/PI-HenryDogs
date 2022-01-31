@@ -48,7 +48,6 @@ const validateDogNotExist = async(req = request, res = response, next) => {
 		if(dog)return res.status(400).json({ error: 'The name already exists in the database.' });
 		
 	} catch (error) {
-
 		console.log(error)
 		return res.status(500).json({ error: "Server error." });
 	}
@@ -59,7 +58,17 @@ const validateDogNotExist = async(req = request, res = response, next) => {
 
 const validateImage = async(req = request, res = response, next) => {
 
-	if(!req.files) return next();
+	if(!req.files) {
+		return res.status(400).json({ 
+			error: 'No file was chosen.' 
+		})
+	}
+
+	if(!req.files.image) {
+		return res.status(400).json({ 
+			error: 'No file was chosen.' 
+		})
+	}
 
 	if (Object.keys(req.files).length > 1) {
     return res.status(400).json({ 

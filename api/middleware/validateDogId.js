@@ -1,12 +1,12 @@
 const { request, response } = require('express');
 
-const { isId } = require('../helpers/validate');
+const { isUUID } = require('../helpers/validate');
 
 const validateDogId = async(req = request, res = response, next) => {
 
 	const { id } = req.params;
 
-	if(!isId(id)){
+	if(!isUUID(id)){
 		return res.status(400).json({ error: 'The id is not valid.' })
 	}
 

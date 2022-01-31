@@ -27,6 +27,7 @@ const Home = () => {
 
 export default Home;
 
+
 const HomeStyled = styled.div`
 
 	display: grid;
@@ -104,6 +105,5 @@ const ContactContainer = styled.div`
 		img{
 			margin-top: 1rem;
 		}
-
 	}
 `

@@ -5,6 +5,7 @@ const { Dog, Temp } = require('../models');
 const cloudinary = require('cloudinary').v2;
 cloudinary.config(process.env.CLOUDINARY_URL);
 
+
 const createDog = async(req = request, res = response) => {
 
 	let { 

@@ -1,5 +1,5 @@
-const express = require('express');
-const routes = express.Router();
+const { Router } = require('express');
+const routes = Router();
 const path = require('path');
 
 const paths = {
@@ -16,8 +16,7 @@ routes.use(paths.img, require('./img'));
 
 routes.get('*', (req, res) => {
   return res.sendFile(path.join(__dirname, '../../client/build/index.html'));
-});
-
+})
 
 
 module.exports = routes;

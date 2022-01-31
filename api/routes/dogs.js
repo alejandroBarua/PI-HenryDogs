@@ -11,5 +11,5 @@ router.get('/:id',
 	getDogByIdDB,
 	getDogByIdAPI)
 
-
+	
 module.exports = router;

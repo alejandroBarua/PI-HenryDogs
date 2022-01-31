@@ -2,15 +2,14 @@ const { request, response } = require('express');
 
 const { Dog } = require('../models');
 
-const { isId } = require('../helpers/validate');
-
+const { isUUID } = require('../helpers/validate');
 
 
 const getDogByIdDB = async(req = request, res = response, next) => {
 
 	const { id } = req.params;
 
-	if(!isId(id)) return next();
+	if(!isUUID(id)) return next();
 
 	try {
 

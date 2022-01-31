@@ -3,7 +3,7 @@ const axios = require('axios');
 
 const { Temp } = require('../models');
 
-const { extractTemps } = require('../utils/temp');
+const extractTemps = require('../utils/extractTemps');
 
 
 const getTemps = async(req = request, res = response) => {
@@ -18,16 +18,12 @@ const getTemps = async(req = request, res = response) => {
 		}
 			
 		const { data } = await axios.get(`https://api.thedogapi.com/v1/breeds?api_key=${process.env.API_KEY}`);
-	
 		const results = extractTemps(data);
 	
 		const promises = results.map(el => Temp.create({ name: el }));
-	
 		await Promise.all(promises);
-		let tempsDB = await Temp.findAll({ attributes: ['name'] });
-		tempsDB = tempsDB.map(el => el.name);
 	
-		res.status(200).json(tempsDB);
+		res.status(200).json(results);
 
 	} catch (error) {
 		console.log(error)

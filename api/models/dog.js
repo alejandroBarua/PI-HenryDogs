@@ -1,8 +1,8 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
+  
   class Dog extends Model {
     
     static associate(models) {
@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "dogId"
       })
     }
-  };
+  }
+
   Dog.init({
     id: {
       type: DataTypes.UUID,
@@ -42,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Dog',
-  });
+  })
+
   return Dog;
-};
+}

@@ -2,6 +2,8 @@ const { request, response } = require('express');
 
 const { Dog } = require('../models');
 
+const getImgPublicId = require('../helpers/getImgPublicId');
+
 const cloudinary = require('cloudinary').v2;
 cloudinary.config(process.env.CLOUDINARY_URL);
 
@@ -21,12 +23,9 @@ const createImage = async(req = request, res = response) => {
 		}
 
 		if (dog.imgUrl) {
-			const nameArr = dog.imgUrl.split('/');
-			const name = nameArr[nameArr.length-1];
-			const [ public_id ] = name.split('.');
+			const public_id = getImgPublicId(dog.imgUrl);
 			cloudinary.uploader.destroy(public_id);
 		}
-
 
 		const { tempFilePath } = req.files.image;
 		const { secure_url } = await cloudinary.uploader.upload(tempFilePath);

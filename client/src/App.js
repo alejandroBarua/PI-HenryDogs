@@ -3,7 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { getTemps, getDogNames } from './store/actions';
 
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import GlobalStyles from "./styles/Global";
 import { Container } from './styles';
 
@@ -20,13 +20,11 @@ import {
 } from './pages';
 
 
-
 const theme = {
   colorPrimary: '#FFAD62',
   colorMedium: '#FFC499',
   colorLight: '#FFEFD8'
 }
-
 
 
 const App = () => {
@@ -47,7 +45,7 @@ const App = () => {
       <GlobalStyles />
         <Container>
           <Header />
-          <Main>
+          <div>
             <Routes>
 
               <Route path="/" element={<Home />} />
@@ -58,7 +56,7 @@ const App = () => {
               <Route path="*" element={<NotFound/>} />
             
           </Routes>
-          </Main>
+          </div>
         </Container>
         {
           pathname === '/' || <Footer />
@@ -69,8 +67,3 @@ const App = () => {
 }
 
 export default App;
-
-
-const Main = styled.div`
-
-`

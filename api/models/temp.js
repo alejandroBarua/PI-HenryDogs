@@ -1,8 +1,8 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
+  
   class Temp extends Model {
     
     static associate(models) {
@@ -11,7 +11,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "tempId"
       })
     }
-  };
+  }
+
   Temp.init({
     name: {
       type: DataTypes.STRING,
@@ -20,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Temp',
-  });
+  })
+
   return Temp;
-};
+}
