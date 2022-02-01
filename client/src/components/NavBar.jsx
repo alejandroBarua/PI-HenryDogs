@@ -63,7 +63,7 @@ const Item = styled.div`
 	}
 	@media(max-width: 420px){
 		a{
-			font-size: 12.6px;
+			font-size: 13px;
 		}
 	}	
 	@media(max-width: 377px){

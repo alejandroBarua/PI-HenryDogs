@@ -31,7 +31,6 @@ export default About;
 
 const AboutStyled = styled.div`
 
-	min-height: calc(100vh - 9rem);
 	max-width: 800px;
 	margin-top: 2rem;
 	margin-bottom: 4rem;
@@ -59,4 +58,15 @@ const AboutStyled = styled.div`
 		color: ${({theme}) => theme.colorPrimary};
 	}
 
+	@media(max-width: 530px){
+
+		h1,
+		h2{
+			font-size: 24px;
+		}
+
+		p{
+			font-size: 14px;
+		}
+	}	
 `

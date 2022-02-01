@@ -8,6 +8,7 @@ export const SET_OPT_ORDER = 'SET_OPT_ORDER';
 export const SET_CONNECT = 'SET_CONNECT';
 export const SET_SEARCH_NAME = 'SET_SEARCH_NAME';
 export const SET_PAGE = 'SET_PAGE';
+export const SET_LOADING = 'SET_LOADING';
 export const SERVER_ERROR = 'SERVER_ERROR';
 export const GET_ONEDOG = 'GET_ONEDOG';
 export const GET_DOG_NAMES = 'GET_DOG_NAMES';
@@ -131,5 +132,13 @@ export const  setPage = (page) => {
 	return {
     type: SET_PAGE,
     payload: page,
+  }
+}
+
+export const  setLoading = (value) => {
+
+	return {
+    type: SET_LOADING,
+    payload: value,
   }
 }

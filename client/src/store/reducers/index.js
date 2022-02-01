@@ -10,7 +10,8 @@ import {
 	SET_PAGE,
 	SERVER_ERROR,
 	GET_ONEDOG,
-	GET_DOG_NAMES
+	GET_DOG_NAMES,
+	SET_LOADING
 
 } from '../actions';
 
@@ -122,6 +123,13 @@ const rootReducer = (state = initialState, {type, payload}) => {
 				...state,
 				page: payload,
 				loading: true
+			}
+		
+		case SET_LOADING:
+
+			return {
+				...state,
+				loading: payload
 			}
 
 		case SERVER_ERROR:

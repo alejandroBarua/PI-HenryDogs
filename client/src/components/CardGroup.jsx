@@ -32,9 +32,8 @@ const CardGroup = () => {
 					<NotFoundContainer>
 						<MsgNotFound 
 							msg={serverError ? serverError.message : 'No matches found for a dog.'}
-							code={serverError ? serverError.code : ''}
-							redirect='/'
-							textBtn={serverError ? 'Back home' : null}/>
+							code={serverError && serverError.code}
+							reload={serverError ? true : false}/>
 					</NotFoundContainer>
 			}
 		</CardGroupStyled>

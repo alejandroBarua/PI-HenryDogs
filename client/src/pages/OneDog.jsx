@@ -56,12 +56,15 @@ const OneDog = () => {
 			}
 
 			{
-				error && <MsgNotFound 
-										msg = 'The id was not found'
-										code='400'
-										redirect='/'
-										textBtn='Back home' />
+				(!loading && error) && 
+									<MsgNotFound 
+										msg={error.message.includes('400') ? 'The id was not found' : error.message}
+										code={error.message.includes('400') ? '400' : error.code}
+										redirect='/dogs'
+										textBtn={error.message.includes('400') && 'Back'}
+										reload={error.message.includes('400') ? false : true} />
 			}
+
 			{
 				(error || !Object.values(dog).length) ? '' : <>
 						<CardStyled>

@@ -2,11 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../store/actions';
+
+
 import { Button } from './index';
 import imgDogSleep from '../assets/notfound.png';
 
 
-const NotFound = ({msg = '', code, redirect='/', textBtn}) => {
+const NotFound = ({msg = '', code = '', redirect='/', textBtn = '', reload=false}) => {
+
+	const dispatch = useDispatch();
+
+	const handleOnBack = () => {
+		dispatch(setLoading(true));
+	}
+
+	const handleOnReload = () => {
+		window.location.reload()
+	} 
 
 	return (
 		<NotFoundStyled>
@@ -14,9 +28,16 @@ const NotFound = ({msg = '', code, redirect='/', textBtn}) => {
 			<p>{`Sorry... ${code ? code : ''}`}</p>
 			<span>{msg}</span>
 			{
-				textBtn && <Link to={redirect}>
+				(textBtn && !reload) && <div onClick={handleOnBack}>
+					<Link to={redirect}>
 									<Button text={textBtn} />
 								</Link>
+				</div> 
+			}
+			{
+				reload && <div onClick={handleOnReload}>
+					<Button text='Reload page' />
+				</div>
 			}
 		</NotFoundStyled>
 
