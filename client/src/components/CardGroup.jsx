@@ -8,7 +8,7 @@ import Card from './Card';
 
 const CardGroup = () => {
 	
-	const {dogs, loading, serverError} = useSelector(state => state);
+	const {dogs, dogsIsEmpty, loading, serverError} = useSelector(state => state);
 	
 	return (
 		<CardGroupStyled>
@@ -28,7 +28,7 @@ const CardGroup = () => {
 				))
 			}
 			{
-				(!loading && !dogs.length) && 
+				(!loading && dogsIsEmpty) && 
 					<NotFoundContainer>
 						<MsgNotFound 
 							msg={serverError ? serverError.message : 'No matches found for a dog.'}

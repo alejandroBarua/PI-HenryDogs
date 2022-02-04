@@ -22,6 +22,7 @@ import { paginate } from '../../helpers/pagination';
 
 const initialState = {
 	dogs: [],
+	dogsIsEmpty: false,
 	temps: [],
 	dogNames: [],
 	filterTemps: [],
@@ -50,9 +51,11 @@ const rootReducer = (state = initialState, {type, payload}) => {
 			return {
 				...state,
 				dogs: payload,
+				dogsIsEmpty: !payload.length,
 				total,
 				loading: false,
-				serverError: null
+				serverError: null,
+				oneDog: {}
 			}
 		case GET_TEMPS:
 
@@ -129,7 +132,8 @@ const rootReducer = (state = initialState, {type, payload}) => {
 
 			return {
 				...state,
-				loading: payload
+				loading: payload,
+				dogs: payload ? [] : state.dogs
 			}
 
 		case SERVER_ERROR:

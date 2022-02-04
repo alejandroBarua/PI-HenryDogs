@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getDogs, removeFilterTemp } from '../store/actions';
+import { getDogs, removeFilterTemp, setLoading } from '../store/actions';
 
 import { 
 	Filters, 
@@ -17,16 +17,17 @@ const Dogs = () => {
 	const dispatch = useDispatch();
 	const { connect, filterTemps, searchName, optOrder, page } = useSelector(state => state);
 
-	useEffect(() => {
-		
-		dispatch(getDogs());
-		
-	}, [connect, filterTemps, searchName, optOrder, page, dispatch]);
-
 	const handlerOnRemove = (value) => {
 		dispatch(removeFilterTemp(value));
 	}
 
+	useEffect(() => {
+
+		dispatch(setLoading(true));
+		dispatch(getDogs());
+
+	}, [connect, filterTemps, searchName, optOrder, page, dispatch]);
+	
 	return (
 		<DogStyled>
 			<Filters />

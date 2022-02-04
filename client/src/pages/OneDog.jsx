@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { getOneDog } from '../store/actions';
+import { getOneDog, setLoading } from '../store/actions';
 
 import { TempGroup, MsgNotFound, Loading  } from '../components';
 import defaultPhoto from '../assets/images/defaultImage.png';
@@ -23,8 +23,9 @@ const OneDog = () => {
 	
 	React.useEffect(() => {
 		
+		dispatch(setLoading(true));
 		dispatch(getOneDog(idDog));
-	}, []);
+	}, [idDog, dispatch]);
 
 
 	const handleOnDelete = () => {
