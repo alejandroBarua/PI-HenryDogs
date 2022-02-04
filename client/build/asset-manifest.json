@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.js": "/static/js/main.f21da699.js",
+    "static/media/banner.png": "/static/media/banner.d1e40f33c7c0d081314f.png",
+    "static/media/notfound.png": "/static/media/notfound.5df50de793be151f85fe.png",
+    "static/media/loading.gif": "/static/media/loading.1cfe0aaacdbb907b03df.gif",
+    "index.html": "/index.html",
+    "main.f21da699.js.map": "/static/js/main.f21da699.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.f21da699.js"
+  ]
+}
