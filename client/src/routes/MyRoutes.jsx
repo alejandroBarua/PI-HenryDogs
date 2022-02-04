@@ -7,8 +7,7 @@ import {
   OneDog,
   CreateDog,
   About,
-  NotFound,
-
+  NotFound
 } from '../pages';
 
 
